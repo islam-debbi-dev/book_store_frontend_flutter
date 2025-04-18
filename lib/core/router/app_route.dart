@@ -2,6 +2,7 @@ import 'package:booke_store/feattures/login/logic/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/login/data/repo/login_repo.dart';
 import '../../feattures/login/presentation/login_page.dart';
 import '../../feattures/home/presentation/homepage.dart';
@@ -11,6 +12,8 @@ import 'constants_router.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
+    final arguments = settings.arguments;
+
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
@@ -21,7 +24,16 @@ class AppRouter {
       case register:
         return MaterialPageRoute(builder: (_) => RegistrationPage());
       case homepage:
-        return MaterialPageRoute(builder: (_) => Homepage());
+        if (arguments is LoginRes) {
+          return MaterialPageRoute(builder: (_) => Homepage(arguments));
+        } else {
+          return MaterialPageRoute(
+              builder: (_) => Scaffold(
+                    body: Center(
+                      child: Text('Invalid arguments for Homepage route'),
+                    ),
+                  ));
+        }
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(
