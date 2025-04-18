@@ -1,10 +1,12 @@
 import 'package:booke_store/feattures/login/data/models/login_req.dart';
+import 'package:booke_store/feattures/registration/data/models/registration_res.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../../feattures/login/data/models/login_res.dart';
+import '../../feattures/registration/data/models/registration_req.dart';
 import 'api_constants.dart';
 import 'dio_generate.dart';
 
@@ -31,6 +33,10 @@ class Api {
       throw Exception(errorMessage);
     }
   }
+
+  // Future<RegistrationRes> register(RegistrationReq registrationReq) async {
+  //   return [];
+  // }
 
   // static Future<void> register(
   //     String email, String username, String password,
