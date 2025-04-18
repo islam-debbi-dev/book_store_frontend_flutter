@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../core/service/Api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../logic/login_cubit.dart';
+import 'widgets/bloc_listener_login.dart';
+import 'widgets/login_form.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,9 +11,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,26 +21,17 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
+            //form
+            const LoginForm(),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await Api.login(
-                  _emailController.text,
-                  _passwordController.text,
-                  context,
-                );
+                context.read<LoginCubit>().login();
               },
               child: Text('Login'),
             ),
+            SizedBox(height: 20),
+            BlocListenerLogin(),
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/register');
