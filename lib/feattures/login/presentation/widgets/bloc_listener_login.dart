@@ -21,7 +21,7 @@ class _BlocListenerLoginState extends State<BlocListenerLogin> {
         }
         if (state is LoginSuccess) {
           Navigator.pop(context);
-          Navigator.pushNamed(context, homepage);
+          Navigator.pushNamed(context, homepage, arguments: state.loginRes);
         }
         if (state is LoginFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
