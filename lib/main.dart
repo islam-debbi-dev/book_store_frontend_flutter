@@ -1,25 +1,22 @@
+import 'package:booke_store/core/router/app_route.dart';
+import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-import 'registration.dart';
-import 'homepage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp(appRouter: AppRouter()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter appRouter;
+  const MyApp({super.key, required this.appRouter});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
-      routes: {
-        '/login': (context) => LoginPage(),
-        '/register': (context) => RegistrationPage(),
-        '/home': (context) => Homepage(),
-      },
+      title: 'Flutter Demo',
+      onGenerateRoute: appRouter.generateRoute,
+      initialRoute: login,
     );
   }
 }
