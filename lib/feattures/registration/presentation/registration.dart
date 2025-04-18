@@ -39,12 +39,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await Api.register(
-                  _emailController.text,
-                  _usernameController.text,
-                  _passwordController.text,
-                  context,
-                );
+                // await Api.register(
+                //   _emailController.text,
+                //   _usernameController.text,
+                //   _passwordController.text,
+                //   context,
+                // );
               },
               child: Text('Register'),
             ),
