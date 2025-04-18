@@ -1,3 +1,4 @@
+import 'package:booke_store/core/router/constants_router.dart';
 import 'package:booke_store/feattures/login/data/models/login_res.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class Homepage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushNamed(context, '/login');
+              Navigator.pushNamed(context, login);
             },
           ),
         ],
