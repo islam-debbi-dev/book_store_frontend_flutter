@@ -1,9 +1,17 @@
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
+import 'api_constants.dart';
+import 'dio_generate.dart';
+
 class Api {
-  static const String baseUrl = 'http://192.168.1.12:8000/api/';
+
+  static Dio dio = DioGenerate.getDio();
+
+  // login with dio
+  
 
   static Future<void> login(
       String email, String password, BuildContext context) async {
