@@ -27,4 +27,5 @@ class LoginRes {
 
   factory LoginRes.fromJson(Map<String, dynamic> json) =>
       _$LoginResFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginResToJson(this);
 }
