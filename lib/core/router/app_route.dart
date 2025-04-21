@@ -1,4 +1,5 @@
 import 'package:booke_store/feattures/login/logic/login_cubit.dart';
+import 'package:booke_store/feattures/registration/logic/registration_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +7,7 @@ import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/login/data/repo/login_repo.dart';
 import '../../feattures/login/presentation/login_page.dart';
 import '../../feattures/home/presentation/homepage.dart';
+import '../../feattures/registration/data/repo/registration_repo.dart';
 import '../../feattures/registration/presentation/registration.dart';
 import '../service/Api.dart';
 import 'constants_router.dart';
@@ -22,7 +24,12 @@ class AppRouter {
                   child: LoginPage(),
                 ));
       case register:
-        return MaterialPageRoute(builder: (_) => RegistrationPage());
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) =>
+                      RegistrationCubit(RegistrationRepo(Api())),
+                  child: RegistrationPage(),
+                ));
       case homepage:
         if (arguments is LoginRes) {
           return MaterialPageRoute(builder: (_) => Homepage(arguments));
