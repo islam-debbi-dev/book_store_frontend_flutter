@@ -1,9 +1,6 @@
 import 'package:booke_store/feattures/login/data/models/login_req.dart';
 import 'package:booke_store/feattures/registration/data/models/registration_res.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:flutter/material.dart';
 
 import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/registration/data/models/registration_req.dart';
@@ -44,6 +41,7 @@ class Api {
 
       if (response.statusCode == 201) {
         final data = response.data as Map<String, dynamic>;
+        print(data);
         return RegistrationRes.fromJson(data);
       } else {
         final errorMessage = 'Failed to register: ${response.statusCode}';
