@@ -17,7 +17,7 @@ class Api {
   Future<LoginRes> login(LoginReq loginReq) async {
     try {
       final response = await dio.post(
-        '${baseUrl}${authLogin}',
+        '$baseUrl$authLogin',
         data: loginReq.toJson(),
       );
 
@@ -30,6 +30,27 @@ class Api {
       }
     } catch (e) {
       final errorMessage = 'Failed to login: $e';
+      throw Exception(errorMessage);
+    }
+  }
+
+  // register with dio
+  Future<RegistrationRes> register(RegistrationReq registrationReq) async {
+    try {
+      final response = await dio.post(
+        '$baseUrl$authRegister',
+        data: registrationReq.toJson(),
+      );
+
+      if (response.statusCode == 201) {
+        final data = response.data as Map<String, dynamic>;
+        return RegistrationRes.fromJson(data);
+      } else {
+        final errorMessage = 'Failed to register: ${response.statusCode}';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      final errorMessage = 'Failed to register: $e';
       throw Exception(errorMessage);
     }
   }
@@ -80,45 +101,45 @@ class Api {
   //   }
   // }
 
-  static Future<void> register(String email, String username, String password,
-      BuildContext context) async {
-    try {
-      final response = await http.post(
-        Uri.parse('${baseUrl}auth/register'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'email': email,
-          'username': username,
-          'password': password,
-        }),
-      );
+  // static Future<void> register(String email, String username, String password,
+  //     BuildContext context) async {
+  //   try {
+  //     final response = await http.post(
+  //       Uri.parse('${baseUrl}auth/register'),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonEncode(<String, String>{
+  //         'email': email,
+  //         'username': username,
+  //         'password': password,
+  //       }),
+  //     );
 
-      if (response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-        // Save token or handle registration success
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration successful')),
-        );
-        print('Registration successful: ${data.toString()}');
-        Navigator.pushNamed(context, '/home');
-      } else {
-        final data = jsonDecode(response.body);
-        final errorMessage = data['message'] ?? 'Failed to register';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
-        );
-        print('Failed to register: $errorMessage');
-        throw Exception(errorMessage);
-      }
-    } catch (e) {
-      final errorMessage = 'Failed to register: $e';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMessage)),
-      );
-      print(errorMessage);
-      throw Exception(errorMessage);
-    }
-  }
+  //     if (response.statusCode == 201) {
+  //       final data = jsonDecode(response.body);
+  //       // Save token or handle registration success
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Registration successful')),
+  //       );
+  //       print('Registration successful: ${data.toString()}');
+  //       Navigator.pushNamed(context, '/home');
+  //     } else {
+  //       final data = jsonDecode(response.body);
+  //       final errorMessage = data['message'] ?? 'Failed to register';
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text(errorMessage)),
+  //       );
+  //       print('Failed to register: $errorMessage');
+  //       throw Exception(errorMessage);
+  //     }
+  //   } catch (e) {
+  //     final errorMessage = 'Failed to register: $e';
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text(errorMessage)),
+  //     );
+  //     print(errorMessage);
+  //     throw Exception(errorMessage);
+  //   }
+  // }
 }
