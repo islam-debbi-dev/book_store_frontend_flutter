@@ -1,6 +1,9 @@
+import 'package:booke_store/feattures/registration/presentation/widgets/registration_bloc_listener.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/service/Api.dart';
+import '../logic/registration_cubit.dart';
+import 'widgets/registration_form.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -9,10 +12,6 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,31 +22,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
+            RegistrationForm(),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
-                // await Api.register(
-                //   _emailController.text,
-                //   _usernameController.text,
-                //   _passwordController.text,
-                //   context,
-                // );
+              onPressed: () {
+                context.read<RegistrationCubit>().register();
               },
               child: Text('Register'),
             ),
+            RegistrationBlocListener(),
           ],
         ),
       ),
