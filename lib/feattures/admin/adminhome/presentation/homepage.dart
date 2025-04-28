@@ -10,18 +10,11 @@ class AdminHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('welcome ${arguments.username}'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              Navigator.pushNamed(context, login);
-            },
-          ),
-        ],
+        automaticallyImplyLeading: false,
+        title: Text('welcome admin ${arguments.username}'),
       ),
       body: Center(
-        child: Text('Homepage'),
+        child: Text('admin Homepage'),
       ),
     );
   }
