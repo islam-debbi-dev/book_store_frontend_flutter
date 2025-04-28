@@ -3,10 +3,11 @@ import 'package:booke_store/feattures/registration/logic/registration_cubit.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feattures/admin/adminhome/presentation/homepage.dart';
 import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/login/data/repo/login_repo.dart';
 import '../../feattures/login/presentation/login_page.dart';
-import '../../feattures/home/presentation/homepage.dart';
+import '../../feattures/user/home/presentation/homepage.dart';
 import '../../feattures/registration/data/repo/registration_repo.dart';
 import '../../feattures/registration/presentation/registration.dart';
 import '../service/Api.dart';
@@ -30,6 +31,17 @@ class AppRouter {
                       RegistrationCubit(RegistrationRepo(Api())),
                   child: RegistrationPage(),
                 ));
+      case adminhomepage:
+        if (arguments is LoginRes) {
+          return MaterialPageRoute(builder: (_) => AdminHomepage(arguments));
+        } else {
+          return MaterialPageRoute(
+              builder: (_) => Scaffold(
+                    body: Center(
+                      child: Text('Invalid arguments for AdminHomepage route'),
+                    ),
+                  ));
+        }
       case homepage:
         if (arguments is LoginRes) {
           return MaterialPageRoute(builder: (_) => Homepage(arguments));
