@@ -24,6 +24,10 @@ class _BlocListenerLoginState extends State<BlocListenerLogin> {
               .showSnackBar(successSnackBar())
               .closed;
           Navigator.pop(context);
+          if (state.loginRes.isAdmin == true) {
+            Navigator.pushNamed(context, adminhomepage,
+                arguments: state.loginRes);
+          }
           Navigator.pushNamed(context, homepage, arguments: state.loginRes);
         }
         if (state is LoginFailure) {
