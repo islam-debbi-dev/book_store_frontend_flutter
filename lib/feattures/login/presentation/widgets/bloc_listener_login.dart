@@ -1,7 +1,7 @@
-import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/router/constants_router.dart';
 import '../../logic/login_cubit.dart';
 
 class BlocListenerLogin extends StatefulWidget {
@@ -25,10 +25,13 @@ class _BlocListenerLoginState extends State<BlocListenerLogin> {
               .closed;
           Navigator.pop(context);
           if (state.loginRes.isAdmin == true) {
+            print(state.loginRes.isAdmin);
             Navigator.pushNamed(context, adminhomepage,
                 arguments: state.loginRes);
           }
-          Navigator.pushNamed(context, homepage, arguments: state.loginRes);
+          if (state.loginRes.isAdmin == false) {
+            Navigator.pushNamed(context, homepage, arguments: state.loginRes);
+          }
         }
         if (state is LoginFailure) {
           ScaffoldMessenger.of(context)
