@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/widgets/profile.dart';
 import '../../../../login/data/models/login_res.dart';
 
 class AdminProfilePage extends StatelessWidget {
@@ -8,6 +9,14 @@ class AdminProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Profile Page for ${adminInfo.username}'));
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Profile(
+            userInfo: adminInfo,
+          ),
+        ],
+      ),
+    );
   }
 }
