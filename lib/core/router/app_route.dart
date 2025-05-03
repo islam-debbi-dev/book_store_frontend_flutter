@@ -1,3 +1,5 @@
+import 'package:booke_store/feattures/admin/adminhome/data/repo/home_repo.dart';
+import 'package:booke_store/feattures/admin/adminhome/logic/admin_home_cubit.dart';
 import 'package:booke_store/feattures/login/logic/login_cubit.dart';
 import 'package:booke_store/feattures/registration/logic/registration_cubit.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +35,11 @@ class AppRouter {
                 ));
       case adminhomepage:
         if (arguments is LoginRes) {
-          return MaterialPageRoute(builder: (_) => AdminHomepage(arguments));
+          return MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                    create: (context) => AdminHomeCubit(HomeRepo(Api())),
+                    child: AdminHomepage(arguments),
+                  ));
         } else {
           return MaterialPageRoute(
               builder: (_) => Scaffold(

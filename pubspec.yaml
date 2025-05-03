@@ -38,6 +38,7 @@ dependencies:
   json_serializable: ^6.9.5
   pretty_dio_logger: ^1.4.0
   json_annotation: ^4.9.0
+ # flutter pub run build_runner build
   build_runner: ^2.4.15
 
 dev_dependencies:
