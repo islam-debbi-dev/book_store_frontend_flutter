@@ -42,10 +42,8 @@ A modern and responsive Flutter application serving as the frontend for an onlin
 *   **State Management:**  BLoC ] 
 *   **Routing:** [GoRouter / Navigator 2.0 / AutoRoute / Other] <!-- Specify your routing solution -->
 *   **HTTP Client:** [Dio ] <!-- Specify your HTTP client -->
-*   **Local Storage:** [shared_preferences / flutter_secure_storage / Hive] <!-- Specify if used -->
-*   **Architecture:** [MVVM / MVC / Clean Architecture / Feature-first] <!-- Specify your architecture pattern -->
-*   **Linting:** [lint / flutter_lints]
-*   **Testing:** [Unit Tests, Widget Tests, Integration Tests] <!-- Mention if tests are included -->
+*   **Local Storage:** [shared_preferences / flutter_secure_storage ] 
+*   **Architecture:** [ Clean Architecture ] <!-- Specify your architecture pattern -->
 
 ---
 
