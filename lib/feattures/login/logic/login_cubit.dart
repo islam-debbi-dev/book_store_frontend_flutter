@@ -21,8 +21,10 @@ class LoginCubit extends Cubit<LoginState> {
       print('Logging in with email: ${emailController.text}');
       print('Logging in with password: ${passwordController.text}');
       final loginReq = LoginReq(
-        email: emailController.text,
-        password: passwordController.text,
+        // email: emailController.text,
+        // password: passwordController.text,
+        email: 'admin@email.com',
+        password: 'Qwerty1234',
       );
       emit(LoginLoading());
       try {
