@@ -1,5 +1,4 @@
 // lib/core/widgets/profile.dart
-import 'package:booke_store/core/router/app_route.dart';
 import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
 import '../../feattures/login/data/models/login_res.dart'; // Import LoginRes

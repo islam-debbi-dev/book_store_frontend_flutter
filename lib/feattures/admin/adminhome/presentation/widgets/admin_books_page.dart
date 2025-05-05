@@ -8,10 +8,13 @@ class AdminBooksPage extends StatefulWidget {
   State<AdminBooksPage> createState() => _AdminBooksPageState();
 }
 
-@override
-void initState(BuildContext context) {}
-
 class _AdminBooksPageState extends State<AdminBooksPage> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<AdminHomeCubit>(context).fetchBooks();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AdminHomeCubit, AdminHomeState>(

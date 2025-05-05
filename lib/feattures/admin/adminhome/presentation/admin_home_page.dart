@@ -1,8 +1,6 @@
 import 'package:booke_store/feattures/login/data/models/login_res.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../logic/admin_home_cubit.dart';
 import 'widgets/admin_authors_page.dart';
 import 'widgets/admin_books_page.dart';
 import 'widgets/admin_profile_page.dart';
@@ -25,9 +23,8 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AdminHomeCubit>(context).fetchBooks();
     _pages = [
-      const AdminBooksPage(),
+      AdminBooksPage(),
       const AdminAuthorsPage(),
       AdminProfilePage(adminInfo: widget.arguments),
     ];
@@ -115,7 +112,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
         // Use IndexedStack to keep state of pages
         index: _selectedIndex,
         children: [
-          const AdminBooksPage(),
+          AdminBooksPage(),
           const AdminAuthorsPage(),
           AdminProfilePage(adminInfo: widget.arguments),
         ],
