@@ -16,3 +16,21 @@ class GetBooksFailure extends AdminHomeState {
   final String error;
   GetBooksFailure(this.error);
 }
+
+// get authors
+class GetAuthorsLoading extends AdminHomeState {}
+
+class GetAuthorsSuccess extends AdminHomeState {
+  final List<Author> newauthors;
+  // save prev list and add new list for it
+  List<Author> allauthors = [];
+
+  GetAuthorsSuccess(this.newauthors) {
+    allauthors.addAll(newauthors);
+  }
+}
+
+class GetAuthorsFailure extends AdminHomeState {
+  final String error;
+  GetAuthorsFailure(this.error);
+}
