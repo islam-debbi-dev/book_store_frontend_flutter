@@ -19,38 +19,47 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<AdminHomeCubit, AdminHomeState>(
       builder: (context, state) {
-        if (state is GetBooksSuccess) {
-          return ListView.builder(
-            itemCount: state.book.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  state.book[index].title!,
-                  style: TextStyle(fontSize: 18),
-                ),
-                subtitle: Text(
-                  'Author: ${state.book[index].author?.firstName} ${state.book[index].author?.lastName}',
-                  style: TextStyle(fontSize: 16),
-                ),
-                trailing: Text(
-                  'Price: \$${state.book[index].price}',
-                  style: TextStyle(fontSize: 16),
-                ),
-              );
-            },
-          );
-        } else if (state is GetBooksLoading) {
-          return Center(child: CircularProgressIndicator());
-        } else if (state is GetBooksFailure) {
-          return Center(child: Text('Error: ${state.error}'));
-        } else {
-          return Center(child: Text('Unknown state'));
+        switch (state.bookStatus) {
+          case DataStatus.success:
+            return ListView.builder(
+              itemCount: state.books.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    state.books[index].title!,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    'Author: ${state.books[index].author?.firstName} ${state.books[index].author?.lastName}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  trailing: Text(
+                    'Price: \$${state.books[index].price}',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                );
+              },
+            );
+
+          case DataStatus.loading:
+            return const Center(child: CircularProgressIndicator());
+          case DataStatus.error:
+            return Center(
+              child: Text(
+                  'Failed to load books: ${state.bookErrorMessage ?? 'Unknown error'}',
+                  style: const TextStyle(color: Colors.red)),
+            );
+          case DataStatus.initial:
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.red,
+            ));
         }
       },
       listener: (BuildContext context, state) {
-        if (state is GetBooksFailure) {
+        if (DataStatus.error == state.bookStatus) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${state.error}')),
+            SnackBar(content: Text('Error: ${state.bookErrorMessage}')),
           );
         }
       },
