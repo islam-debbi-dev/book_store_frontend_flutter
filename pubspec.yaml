@@ -41,6 +41,7 @@ dependencies:
  # flutter pub run build_runner build
   build_runner: ^2.4.15
   image_picker: ^1.1.2
+  equatable: ^2.0.7
 
 dev_dependencies:
   flutter_lints: ^5.0.0

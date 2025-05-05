@@ -1,36 +1,56 @@
 part of 'admin_home_cubit.dart';
 
-@immutable
-abstract class AdminHomeState {}
+// Define separate statuses for clarity
+enum DataStatus { initial, loading, success, error }
 
-class AdminHomeInitial extends AdminHomeState {}
+class AdminHomeState extends Equatable {
+  // Book related state
+  final DataStatus bookStatus;
+  final List<Book> books;
+  final String bookErrorMessage;
 
-class GetBooksSuccess extends AdminHomeState {
-  final List<Book> book;
-  GetBooksSuccess(this.book);
-}
+  // Author related state
+  final DataStatus authorStatus;
+  final List<Author> authors;
+  final bool hasReachedMaxAuthors;
+  final String authorErrorMessage;
 
-class GetBooksLoading extends AdminHomeState {}
+  const AdminHomeState({
+    // Book defaults
+    this.bookStatus = DataStatus.initial,
+    this.books = const <Book>[],
+    this.bookErrorMessage = '',
+    // Author defaults
+    this.authorStatus = DataStatus.initial,
+    this.authors = const <Author>[],
+    this.hasReachedMaxAuthors = false,
+    this.authorErrorMessage = '',
+  });
 
-class GetBooksFailure extends AdminHomeState {
-  final String error;
-  GetBooksFailure(this.error);
-}
-
-// get authors
-class GetAuthorsLoading extends AdminHomeState {}
-
-class GetAuthorsSuccess extends AdminHomeState {
-  final List<Author> newauthors;
-  // save prev list and add new list for it
-  List<Author> allauthors = [];
-
-  GetAuthorsSuccess(this.newauthors) {
-    allauthors.addAll(newauthors);
+  AdminHomeState copyWith({
+    DataStatus? bookStatus,
+    List<Book>? books,
+    String? bookErrorMessage,
+    DataStatus? authorStatus,
+    List<Author>? authors,
+    bool? hasReachedMaxAuthors,
+    String? authorErrorMessage,
+  }) {
+    return AdminHomeState(
+      bookStatus: bookStatus ?? this.bookStatus,
+      books: books ?? this.books,
+      bookErrorMessage: bookErrorMessage ?? this.bookErrorMessage,
+      authorStatus: authorStatus ?? this.authorStatus,
+      authors: authors ?? this.authors,
+      hasReachedMaxAuthors: hasReachedMaxAuthors ?? this.hasReachedMaxAuthors,
+      authorErrorMessage: authorErrorMessage ?? this.authorErrorMessage,
+    );
   }
-}
 
-class GetAuthorsFailure extends AdminHomeState {
-  final String error;
-  GetAuthorsFailure(this.error);
+  @override
+  List<Object?> get props => [
+        bookStatus, books, bookErrorMessage, // Book props
+        authorStatus, authors, hasReachedMaxAuthors,
+        authorErrorMessage, // Author props
+      ];
 }
