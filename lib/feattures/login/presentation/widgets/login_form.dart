@@ -36,7 +36,7 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: BlocProvider.of<LoginCubit>(context).loginFormKey,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

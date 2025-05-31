@@ -11,7 +11,7 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('welcome ${arguments.username}'),
+        title: Text('welcome ${arguments.username ?? ''}'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),

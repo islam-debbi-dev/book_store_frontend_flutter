@@ -3,6 +3,8 @@ import 'package:booke_store/feattures/login/data/repo/login_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/constants.dart';
+import '../../../core/helpers/shared_pref_helper.dart';
 import '../data/models/login_req.dart';
 import '../data/models/login_res.dart';
 
@@ -29,7 +31,8 @@ class LoginCubit extends Cubit<LoginState> {
       try {
         final response = await loginRepo.login(loginReq);
         response.when(
-          success: (data) {
+          success: (data) async {
+            await saveUserToken(data.token ?? "");
             emit(LoginSuccess(data));
           },
           failure: (error) {
@@ -44,5 +47,10 @@ class LoginCubit extends Cubit<LoginState> {
 
   void reset() {
     emit(LoginInitial());
+  }
+
+  Future<void> saveUserToken(String token) async {
+    // save token to shared pref
+    await SharedPrefHelper.setData(SharedPrefKeys.userToken, token);
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../logic/login_cubit.dart';
 import 'widgets/bloc_listener_login.dart';
@@ -26,10 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0.h),
+            padding: EdgeInsets.symmetric(horizontal: 5.0.h),
             child: Column(
               children: [
-                SizedBox(height: 60.h),
+                SizedBox(height: 5.h),
                 // Logo
                 const LogoWithLoginText(),
                 // Login Form
@@ -37,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // Sign In Button
                 SizedBox(
-                  width: double.infinity,
-                  height: 56.h,
+                  width: 250.w,
+                  height: 50.h,
                   child: ElevatedButton(
                     onPressed: () {
                       context.read<LoginCubit>().login();
