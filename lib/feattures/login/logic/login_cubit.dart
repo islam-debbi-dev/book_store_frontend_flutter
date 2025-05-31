@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:booke_store/feattures/login/data/repo/login_repo.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../data/models/login_req.dart';
@@ -19,15 +20,22 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> login() async {
     if (loginFormKey.currentState?.validate() ?? false) {
       final loginReq = LoginReq(
-        email: emailController.text,
-        password: passwordController.text,
-        // email: 'admin@email.com',
-        // password: 'Qwerty1234',
+        // email: emailController.text,
+        // password: passwordController.text,
+        email: 'admin@email.com',
+        password: 'Qwerty1234',
       );
       emit(LoginLoading());
       try {
-        final loginRes = await loginRepo.login(loginReq);
-        emit(LoginSuccess(loginRes));
+        final response = await loginRepo.login(loginReq);
+        response.when(
+          success: (data) {
+            emit(LoginSuccess(data));
+          },
+          failure: (error) {
+            emit(LoginFailure(error.apiErrorModel.message ?? ''));
+          },
+        );
       } catch (e) {
         emit(LoginFailure(e.toString()));
       }
