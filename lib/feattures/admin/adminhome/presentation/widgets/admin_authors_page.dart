@@ -78,10 +78,11 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
   }
 
   void _onScroll() {
-    if (_isBottom)
+    if (_isBottom) {
       context
           .read<AdminHomeCubit>()
           .fetchAuthors(_pageNumber); // Use AdminHomeCubit
+    }
   }
 
   bool get _isBottom {

@@ -32,8 +32,10 @@ class AdminHomeCubit extends Cubit<AdminHomeState> {
   // --- Author Fetching Logic (Merged) ---
   Future<void> fetchAuthors(int pageNumber, [int authorsPerPage = 10]) async {
     // Prevent fetching if already loading or max reached
-    if (state.authorStatus == DataStatus.loading || state.hasReachedMaxAuthors)
+    if (state.authorStatus == DataStatus.loading ||
+        state.hasReachedMaxAuthors) {
       return;
+    }
 
     // Set status to loading, keeping existing authors if not initial load
     emit(state.copyWith(authorStatus: DataStatus.loading));
