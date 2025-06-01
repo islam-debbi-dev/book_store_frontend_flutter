@@ -7,29 +7,26 @@ import '../../feattures/admin/adminhome/data/models/author.dart';
 import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/registration/data/models/registration_req.dart';
 import 'api_constants.dart';
+import 'api_error_model.dart';
 import 'dio_generate.dart';
 
 class Api {
   static Dio dio = DioGenerate.getDio();
 
   // login with dio
-  Future<LoginRes> login(LoginReq loginReq) async {
-    try {
-      final response = await dio.post(
-        '$baseUrl$authLogin',
-        data: loginReq.toJson(),
-      );
+  Future<dynamic> login(LoginReq loginReq) async {
+    final response = await dio.post(
+      '$baseUrl$authLogin',
+      data: loginReq.toJson(),
+    );
 
-      if (response.statusCode == 200) {
-        final data = response.data as Map<String, dynamic>;
-        return LoginRes.fromJson(data);
-      } else {
-        final errorMessage = 'Failed to login: ${response.statusCode}';
-        throw Exception(errorMessage);
-      }
-    } catch (e) {
-      final errorMessage = 'Failed to login: $e';
-      throw Exception(errorMessage);
+    if (response.statusCode == 200) {
+      final data = response.data as Map<String, dynamic>;
+      return LoginRes.fromJson(data);
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
     }
   }
 

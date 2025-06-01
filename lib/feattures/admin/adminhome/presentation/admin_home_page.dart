@@ -1,6 +1,8 @@
 import 'package:booke_store/feattures/login/data/models/login_res.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/helpers/constants.dart';
+import '../../../../core/helpers/shared_pref_helper.dart';
 import 'widgets/admin_authors_page.dart';
 import 'widgets/admin_books_page.dart';
 import 'widgets/admin_profile_page.dart';
@@ -23,10 +25,11 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   void initState() {
     super.initState();
+
     _pages = [
       AdminBooksPage(),
       const AdminAuthorsPage(),
-      AdminProfilePage(adminInfo: widget.arguments),
+      AdminProfilePage(adminInfo: user),
     ];
   }
 
@@ -69,7 +72,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Text(
-                    'Profile ${user.username}',
+                    'Profile ${user.username ?? ''}',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -101,8 +104,14 @@ class _AdminHomepageState extends State<AdminHomepage> {
               ? SizedBox()
               : IconButton(
                   icon: Icon(Icons.notifications_none, color: Colors.grey[800]),
-                  onPressed: () {
+                  onPressed: () async {
                     // Handle notifications action
+                    final userToken = await SharedPrefHelper.getString(
+                        SharedPrefKeys.userToken);
+                    print(userToken);
+                    final userData =
+                        await SharedPrefHelper.getString('username');
+                    print('username from storage : ${userData}');
                   },
                 ),
         ],
@@ -114,7 +123,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
         children: [
           AdminBooksPage(),
           const AdminAuthorsPage(),
-          AdminProfilePage(adminInfo: widget.arguments),
+          AdminProfilePage(adminInfo: user),
         ],
       ),
       // Add the Bottom Navigation Bar

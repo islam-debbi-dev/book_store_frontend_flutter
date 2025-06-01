@@ -1,14 +1,13 @@
 import 'package:booke_store/feattures/admin/adminhome/data/repo/home_repo.dart';
 import 'package:booke_store/feattures/admin/adminhome/logic/admin_home_cubit.dart';
 import 'package:booke_store/feattures/login/logic/login_cubit.dart';
+import 'package:booke_store/feattures/login/presentation/login_screen.dart';
 import 'package:booke_store/feattures/registration/logic/registration_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../feattures/admin/adminhome/presentation/admin_home_page.dart';
 import '../../feattures/login/data/models/login_res.dart';
 import '../../feattures/login/data/repo/login_repo.dart';
-import '../../feattures/login/presentation/login_page.dart';
 import '../../feattures/user/home/presentation/homepage.dart';
 import '../../feattures/registration/data/repo/registration_repo.dart';
 import '../../feattures/registration/presentation/registration.dart';
@@ -18,14 +17,14 @@ import 'constants_router.dart';
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
-
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => LoginCubit(LoginRepo(Api())),
-                  child: LoginPage(),
+                  child: LoginScreen(),
                 ));
+
       case register:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
@@ -61,11 +60,12 @@ class AppRouter {
         }
       default:
         return MaterialPageRoute(
-            builder: (_) => Scaffold(
-                  body: Center(
-                    child: Text('Page not found ${settings.name}'),
-                  ),
-                ));
+          builder: (_) => Scaffold(
+            body: Center(
+              child: Text('Page not found ${settings.name}'),
+            ),
+          ),
+        );
     }
   }
 }

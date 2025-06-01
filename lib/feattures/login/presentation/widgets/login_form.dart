@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../logic/login_cubit.dart';
+import 'build_text_field.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -34,28 +36,42 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
       key: BlocProvider.of<LoginCubit>(context).loginFormKey,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.w),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
+            // Email Field
+            BuildTextField(
               controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
+              icon: Icons.email_outlined,
+              label: 'Email',
             ),
-            const SizedBox(height: 16),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 16),
+            SizedBox(height: 20.h),
+            // Password Field
+            BuildTextField(
+                controller: passwordController,
+                icon: Icons.lock_outlined,
+                label: 'Password',
+                isPassword: true),
+            SizedBox(height: 32.h),
+            // TextField(
+            //   controller: emailController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Email',
+            //     border: OutlineInputBorder(),
+            //   ),
+            //   keyboardType: TextInputType.emailAddress,
+            // ),
+            // const SizedBox(height: 16),
+            // TextField(
+            //   controller: passwordController,
+            //   decoration: const InputDecoration(
+            //     labelText: 'Password',
+            //     border: OutlineInputBorder(),
+            //   ),
+            //   obscureText: true,
+            // ),
+            //const SizedBox(height: 16),
           ],
         ),
       ),

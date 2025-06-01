@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:booke_store/feattures/login/data/repo/login_repo.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/helpers/constants.dart';
+import '../../../core/helpers/shared_pref_helper.dart';
 import '../data/models/login_req.dart';
 import '../data/models/login_res.dart';
 
@@ -18,8 +20,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future<void> login() async {
     if (loginFormKey.currentState?.validate() ?? false) {
-      print('Logging in with email: ${emailController.text}');
-      print('Logging in with password: ${passwordController.text}');
       final loginReq = LoginReq(
         // email: emailController.text,
         // password: passwordController.text,
@@ -28,8 +28,17 @@ class LoginCubit extends Cubit<LoginState> {
       );
       emit(LoginLoading());
       try {
-        final loginRes = await loginRepo.login(loginReq);
-        emit(LoginSuccess(loginRes));
+        final response = await loginRepo.login(loginReq);
+        response.when(
+          success: (data) async {
+            await saveUserData(data);
+            await saveUserToken(data.token ?? "");
+            emit(LoginSuccess(data));
+          },
+          failure: (error) {
+            emit(LoginFailure(error.apiErrorModel.message ?? ''));
+          },
+        );
       } catch (e) {
         emit(LoginFailure(e.toString()));
       }
@@ -38,5 +47,18 @@ class LoginCubit extends Cubit<LoginState> {
 
   void reset() {
     emit(LoginInitial());
+  }
+
+  Future<void> saveUserToken(String token) async {
+    // save token to shared pref
+    await SharedPrefHelper.setData(SharedPrefKeys.userToken, token);
+  }
+
+  // save user data to shared pref
+  Future<void> saveUserData(LoginRes data) async {
+    await SharedPrefHelper.setData(SharedPrefKeys.username, data.username);
+    await SharedPrefHelper.setData(SharedPrefKeys.email, data.email);
+    await SharedPrefHelper.setData(SharedPrefKeys.id, data.id);
+    await SharedPrefHelper.setData(SharedPrefKeys.isAdmin, data.isAdmin);
   }
 }
