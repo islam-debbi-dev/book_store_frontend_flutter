@@ -9,6 +9,7 @@ import 'widgets/login_form.dart';
 import 'widgets/logo_with_login_to_your_account.dart';
 import 'widgets/or_sign_in_with.dart';
 import 'widgets/social_login_buttons.dart';
+import '../../../core/helpers/shared_pref_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -60,7 +61,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-
+                TextButton(
+                  onPressed: () {
+                    SharedPrefHelper.getString("userToken");
+                  },
+                  child: Text('show me'),
+                ),
                 OrSignInWith(),
                 SizedBox(height: 24.h),
                 // Social Login Buttons

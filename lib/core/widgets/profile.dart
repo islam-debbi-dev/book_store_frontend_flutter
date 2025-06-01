@@ -1,4 +1,5 @@
 // lib/core/widgets/profile.dart
+import 'package:booke_store/core/helpers/shared_pref_helper.dart';
 import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
 import '../../feattures/login/data/models/login_res.dart'; // Import LoginRes
@@ -59,6 +60,8 @@ class _ProfileState extends State<Profile> {
               style:
                   ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
               onPressed: () {
+                // clear all storage data
+                SharedPrefHelper.clearAllData();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     login, (Route<dynamic> route) => false);
               },

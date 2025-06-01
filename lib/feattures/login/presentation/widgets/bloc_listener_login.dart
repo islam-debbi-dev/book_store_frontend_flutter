@@ -71,7 +71,7 @@ SnackBar successSnackBar() {
 
 SnackBar errorSnackBar(String errorMessage) {
   return SnackBar(
-    content: Text('$errorMessage'),
+    content: Text(errorMessage),
     duration: const Duration(seconds: 2),
     behavior: SnackBarBehavior.floating,
     margin: const EdgeInsets.all(16),

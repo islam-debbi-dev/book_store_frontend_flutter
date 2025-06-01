@@ -9,7 +9,7 @@ class DioGenerate {
   DioGenerate._internal();
 
   static Dio getDio() {
-    Duration timeout = Duration(seconds: 30);
+    Duration timeout = Duration(seconds: 20);
     if (dio == null) {
       dio = Dio();
       dio!

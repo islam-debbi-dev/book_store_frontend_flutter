@@ -25,10 +25,11 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   void initState() {
     super.initState();
+
     _pages = [
       AdminBooksPage(),
       const AdminAuthorsPage(),
-      AdminProfilePage(adminInfo: widget.arguments),
+      AdminProfilePage(adminInfo: user),
     ];
   }
 
@@ -108,6 +109,9 @@ class _AdminHomepageState extends State<AdminHomepage> {
                     final userToken = await SharedPrefHelper.getString(
                         SharedPrefKeys.userToken);
                     print(userToken);
+                    final userData =
+                        await SharedPrefHelper.getString('username');
+                    print('username from storage : ${userData}');
                   },
                 ),
         ],
@@ -119,7 +123,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
         children: [
           AdminBooksPage(),
           const AdminAuthorsPage(),
-          AdminProfilePage(adminInfo: widget.arguments),
+          AdminProfilePage(adminInfo: user),
         ],
       ),
       // Add the Bottom Navigation Bar
