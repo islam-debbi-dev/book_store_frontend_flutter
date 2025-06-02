@@ -2,6 +2,8 @@ import 'package:booke_store/feattures/admin/adminhome/logic/admin_home_cubit.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'books_view.dart';
+
 class AdminBooksPage extends StatefulWidget {
   const AdminBooksPage({super.key});
   @override
@@ -21,25 +23,7 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
       builder: (context, state) {
         switch (state.bookStatus) {
           case DataStatus.success:
-            return ListView.builder(
-              itemCount: state.books.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    state.books[index].title!,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  subtitle: Text(
-                    'Author: ${state.books[index].author?.firstName} ${state.books[index].author?.lastName}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  trailing: Text(
-                    'Price: \$${state.books[index].price}',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                );
-              },
-            );
+            return BooksView(books: state.books);
 
           case DataStatus.loading:
             return const Center(child: CircularProgressIndicator());

@@ -6,3 +6,11 @@ class SharedPrefKeys {
   static const String isAdmin = 'isAdmin';
   bool isLoggedInUser = false;
 }
+
+int pageNumberAuthor = 1;
+int pageNumberBook = 1;
+
+clearPageNumbers() {
+  pageNumberAuthor = 1;
+  pageNumberBook = 1;
+}
