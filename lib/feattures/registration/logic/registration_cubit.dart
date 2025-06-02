@@ -25,11 +25,16 @@ class RegistrationCubit extends Cubit<RegistrationState> {
         username: usernameController.text,
       );
       try {
-        final registrationRes =
-            await registrationRepo.register(registrationReq);
-        emit(RegistrationSuccess(registrationRes));
+        final response = await registrationRepo.register(registrationReq);
+        response.when(
+          success: (data) async {
+            emit(RegistrationSuccess(data));
+          },
+          failure: (error) {
+            emit(RegistrationFailure(error.apiErrorModel.message ?? ''));
+          },
+        );
       } catch (e) {
-        print('Error during registration: $e');
         emit(RegistrationFailure(e.toString()));
       }
     } else {

@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Book Store',
           onGenerateRoute: appRouter.generateRoute,
-          initialRoute: isLoggedInUser ? adminhomepage : login,
+          // initialRoute: isLoggedInUser ? adminhomepage : login,
+          // initialRoute: register,
           // Pass arguments if logged in
           onGenerateInitialRoutes: (initialRouteName) =>
               generateInitialRoutes(initialRouteName, appRouter),

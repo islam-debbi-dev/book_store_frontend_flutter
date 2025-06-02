@@ -2,17 +2,24 @@ import 'package:booke_store/core/service/Api.dart';
 
 import '../models/registration_req.dart';
 import '../models/registration_res.dart';
+import 'package:booke_store/core/service/api_error_handler.dart';
+import 'package:booke_store/core/service/api_result.dart';
 
 class RegistrationRepo {
   final Api api;
   RegistrationRepo(this.api);
 
-  Future<RegistrationRes> register(RegistrationReq registrationReq) async {
+  Future<ApiResult<RegistrationRes>> register(
+      RegistrationReq registrationReq) async {
     try {
-      final response = await api.register(registrationReq);
-      return response;
+      final data = await api.register(registrationReq);
+      if (data is RegistrationRes) {
+        return ApiResult.success(data);
+      } else {
+        return ApiResult.failure(ErrorHandler.handle(data));
+      }
     } catch (e) {
-      throw Exception('Failed to register: $e');
+      return ApiResult.failure(ErrorHandler.handle(e));
     }
   }
 }
