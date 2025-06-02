@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../logic/admin_home_cubit.dart';
 
@@ -17,6 +18,8 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
   @override
   void initState() {
     super.initState();
+    print('page number is : ${_pageNumber}');
+
     // Fetch initial authors using the merged cubit
     context.read<AdminHomeCubit>().fetchAuthors(_pageNumber);
     _scrollController.addListener(_onScroll);
@@ -67,18 +70,23 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
         // Display author item
         final author = state.authors[index];
         return ListTile(
-          leading: CircleAvatar(child: Text('')), // Example avatar
-          title: Text(author.firstName ?? ''),
-          subtitle: Text(
-              author.lastName ?? 'No bio available'), // Handle nullable bio
-          // Add onTap or trailing icons for edit/delete later
-        );
+            leading: CircleAvatar(child: Text('')), // Example avatar
+            title: Text(author.firstName ?? ''),
+            subtitle: Container(
+              height: 100.h,
+              child: Text(
+                  author.lastName ?? 'No bio available'), // Handle nullable bio
+              // Add onTap or trailing icons for edit/delete later
+            ));
       },
     );
   }
 
   void _onScroll() {
     if (_isBottom) {
+      _pageNumber += 1;
+      print('page number is : ${_pageNumber}');
+
       context
           .read<AdminHomeCubit>()
           .fetchAuthors(_pageNumber); // Use AdminHomeCubit
@@ -90,8 +98,8 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.offset;
     // Trigger fetch slightly before reaching the absolute bottom
-    _pageNumber += 1;
-    return currentScroll >= (maxScroll * 0.9);
+
+    return currentScroll >= (maxScroll);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/router/constants_router.dart';
 
 class DoYouHaveAnAccount extends StatefulWidget {
   const DoYouHaveAnAccount({super.key});
@@ -22,7 +23,7 @@ class _DoYouHaveAnAccountState extends State<DoYouHaveAnAccount> {
           ),
         ),
         GestureDetector(
-          onTap: () => Navigator.pushNamed(context, '/signup'),
+          onTap: () => Navigator.pushNamed(context, register),
           child: Text(
             'Sign up',
             style: TextStyle(

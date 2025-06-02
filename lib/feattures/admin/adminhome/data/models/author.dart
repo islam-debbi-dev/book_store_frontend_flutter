@@ -5,6 +5,7 @@ part 'author.g.dart';
 class Author {
   @JsonKey(name: '_id')
   String? id;
+  // @JsonKey(name: 'firstname')
   String? firstName;
   String? lastName;
   String? nationality;

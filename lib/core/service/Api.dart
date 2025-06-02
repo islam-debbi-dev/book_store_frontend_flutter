@@ -31,23 +31,19 @@ class Api {
   }
 
   // register with dio
-  Future<RegistrationRes> register(RegistrationReq registrationReq) async {
-    try {
-      final response = await dio.post(
-        '$baseUrl$authRegister',
-        data: registrationReq.toJson(),
-      );
+  Future<dynamic> register(RegistrationReq registrationReq) async {
+    final response = await dio.post(
+      '$baseUrl$authRegister',
+      data: registrationReq.toJson(),
+    );
 
-      if (response.statusCode == 201) {
-        final data = response.data as Map<String, dynamic>;
-        return RegistrationRes.fromJson(data);
-      } else {
-        final errorMessage = 'Failed to register: ${response.statusCode}';
-        throw Exception(errorMessage);
-      }
-    } catch (e) {
-      final errorMessage = 'Failed to register: $e';
-      throw Exception(errorMessage);
+    if (response.statusCode == 201) {
+      final data = response.data as Map<String, dynamic>;
+      return RegistrationRes.fromJson(data);
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
     }
   }
 
