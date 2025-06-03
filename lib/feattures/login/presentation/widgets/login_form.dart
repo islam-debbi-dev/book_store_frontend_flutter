@@ -54,24 +54,6 @@ class _LoginFormState extends State<LoginForm> {
                 label: 'Password',
                 isPassword: true),
             SizedBox(height: 32.h),
-            // TextField(
-            //   controller: emailController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Email',
-            //     border: OutlineInputBorder(),
-            //   ),
-            //   keyboardType: TextInputType.emailAddress,
-            // ),
-            // const SizedBox(height: 16),
-            // TextField(
-            //   controller: passwordController,
-            //   decoration: const InputDecoration(
-            //     labelText: 'Password',
-            //     border: OutlineInputBorder(),
-            //   ),
-            //   obscureText: true,
-            // ),
-            //const SizedBox(height: 16),
           ],
         ),
       ),

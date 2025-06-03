@@ -38,7 +38,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
           style: TextStyle(
             fontSize: 14.sp,
             fontWeight: FontWeight.w500,
-            color: const Color(0xFF374151),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         SizedBox(height: 8.h),
@@ -46,8 +46,8 @@ class _BuildTextFieldState extends State<BuildTextField> {
           controller: widget.controller,
           obscureText: _obscureText,
           decoration: InputDecoration(
-            prefixIcon:
-                Icon(widget.icon, color: const Color(0xFF9CA3AF), size: 20.sp),
+            prefixIcon: Icon(widget.icon,
+                color: Theme.of(context).colorScheme.primary, size: 20.sp),
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(
@@ -56,11 +56,13 @@ class _BuildTextFieldState extends State<BuildTextField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.sp),
-              borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.sp),
-              borderSide: BorderSide(color: Color(0xFF1D4ED8), width: 2.w),
+              borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.secondary, width: 3.w),
             ),
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 16.h, vertical: 16.w),
@@ -68,7 +70,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
                 ? IconButton(
                     icon: Icon(
                       _obscureText ? Icons.visibility_off : Icons.visibility,
-                      color: const Color(0xFF9CA3AF),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: () {
                       setState(() {

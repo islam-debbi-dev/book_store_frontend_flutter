@@ -18,7 +18,7 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width?.w,
       height: height?.h,
       child: Card(

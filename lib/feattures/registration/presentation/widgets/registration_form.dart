@@ -47,12 +47,14 @@ class _RegistrationFormState extends State<RegistrationForm> {
             hint: 'Email',
             icon: Icons.email,
             keyboardType: TextInputType.emailAddress,
+            context: context,
           ),
           SizedBox(height: 16.h),
           BuildTextField(
             controller: _usernameController,
             hint: 'Username',
             icon: Icons.person,
+            context: context,
           ),
           SizedBox(height: 16.h),
           BuildTextField(
@@ -60,6 +62,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             hint: 'Password',
             icon: Icons.lock,
             obscureText: true,
+            context: context,
           ),
           SizedBox(height: 16.h),
         ],
@@ -69,6 +72,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
 }
 
 Widget BuildTextField({
+  required BuildContext context,
   required TextEditingController controller,
   required String hint,
   required IconData icon,
@@ -84,7 +88,7 @@ Widget BuildTextField({
     validator: validator,
     decoration: InputDecoration(
       hintText: hint,
-      prefixIcon: Icon(icon, color: const Color(0xFF666666)),
+      prefixIcon: Icon(icon, color: Theme.of(context).colorScheme.primary),
       suffixIcon: suffixIcon,
       filled: true,
       fillColor: const Color(0xFFF8F9FA),
@@ -98,7 +102,8 @@ Widget BuildTextField({
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12.r),
-        borderSide: const BorderSide(color: Color(0xFF6C5CE7), width: 2),
+        borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.secondary, width: 3),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
     ),

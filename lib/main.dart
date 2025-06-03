@@ -1,12 +1,13 @@
 import 'package:booke_store/core/helpers/extentions.dart';
 import 'package:booke_store/core/helpers/shared_pref_helper.dart';
 import 'package:booke_store/core/router/app_route.dart';
-import 'package:booke_store/core/router/constants_router.dart';
+import 'package:booke_store/core/router/generate_init_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/helpers/constants.dart';
 import 'core/helpers/get_user_data.dart';
 import 'feattures/login/data/models/login_res.dart';
+import 'core/theme/app_theme.dart';
 
 bool isLoggedInUser = false;
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         return MaterialApp(
+          theme: appTheme,
           debugShowCheckedModeBanner: false,
           title: 'Book Store',
           onGenerateRoute: appRouter.generateRoute,
@@ -36,7 +38,8 @@ class MyApp extends StatelessWidget {
           // initialRoute: register,
           // Pass arguments if logged in
           onGenerateInitialRoutes: (initialRouteName) =>
-              generateInitialRoutes(initialRouteName, appRouter),
+              GenerateInitRoute.generateInitialRoutes(
+                  initialRouteName, appRouter),
         );
       },
     );
@@ -56,26 +59,5 @@ Future<void> checkIfLoggedInUser() async {
     print('User is not logged in');
     isLoggedInUser = false;
     loggedInUser = null;
-  }
-}
-
-List<Route<dynamic>> generateInitialRoutes(
-    String initialRouteName, AppRouter appRouter) {
-  if (isLoggedInUser && loggedInUser != null) {
-    return [
-      loggedInUser!.isAdmin == true
-          ? appRouter.generateRoute(
-              RouteSettings(name: adminhomepage, arguments: loggedInUser),
-            )
-          : appRouter.generateRoute(
-              RouteSettings(name: homepage, arguments: loggedInUser),
-            )
-    ];
-  } else {
-    return [
-      appRouter.generateRoute(
-        RouteSettings(name: login),
-      ),
-    ];
   }
 }

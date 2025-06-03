@@ -27,7 +27,7 @@ class _DoYouHaveAnAccountState extends State<DoYouHaveAnAccount> {
           child: Text(
             'Sign up',
             style: TextStyle(
-              color: Color(0xFF1D4ED8),
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
             ),

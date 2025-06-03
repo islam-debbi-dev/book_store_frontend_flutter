@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/book_card.dart';
 import '../../data/models/book.dart';
@@ -22,8 +25,9 @@ class _BooksViewState extends State<BooksView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(top: 16.0.h, left: 16.w, right: 16.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Grid Layout
           Expanded(
@@ -51,7 +55,7 @@ class _BooksViewState extends State<BooksView> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: 20.h)
         ],
       ),
     );

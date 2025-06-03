@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/widgets/social_buttom/social_buttons.dart';
 import '../logic/login_cubit.dart';
 import 'widgets/bloc_listener_login.dart';
 import 'widgets/do_you_have_an_account.dart';
 import 'widgets/login_form.dart';
 import 'widgets/logo_with_login_to_your_account.dart';
 import 'widgets/or_sign_in_with.dart';
-import 'widgets/social_login_buttons.dart';
-import '../../../core/helpers/shared_pref_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -44,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       context.read<LoginCubit>().login();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1D4ED8),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.sp),
@@ -61,16 +60,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 24.h),
-                TextButton(
-                  onPressed: () {
-                    SharedPrefHelper.getString("userToken");
-                  },
-                  child: Text('show me'),
-                ),
+
                 OrSignInWith(),
                 SizedBox(height: 24.h),
                 // Social Login Buttons
-                SocialLoginButtons(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: SocialButtons(),
+                ),
                 SizedBox(height: 40.h),
                 //do you have an account
                 DoYouHaveAnAccount(),
