@@ -9,7 +9,7 @@ class OrSignInWith extends StatelessWidget {
     return Text(
       '- Or sign in with -',
       style: TextStyle(
-        color: Color(0xFF6B7280),
+        color: Theme.of(context).colorScheme.primary,
         fontSize: 14.sp,
       ),
     );

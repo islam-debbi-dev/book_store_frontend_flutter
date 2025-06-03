@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'build_social_button.dart';
+import '../../../feattures/login/presentation/widgets/build_social_button.dart';
 
 class SocialLoginButtons extends StatefulWidget {
   const SocialLoginButtons({super.key});

@@ -11,35 +11,42 @@ class LogoWithLoginText extends StatelessWidget {
         SizedBox(height: 40.h),
         // Logo
         Container(
-          width: 90.w,
-          height: 90.h,
+          width: 100.w,
+          height: 100.h,
           decoration: BoxDecoration(
-            color: const Color(0xFF1E3A8A),
+            color: Theme.of(context).colorScheme.primary,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Icon(
             Icons.account_balance_wallet,
-            size: 50.sp,
+            size: 60.sp,
             color: Colors.white,
           ),
         ),
-        SizedBox(height: 16.h),
+        SizedBox(height: 8.h),
         Text(
           'cignifi',
           style: TextStyle(
-            color: Color(0xFF1E3A8A),
+            color: Theme.of(context).colorScheme.primary,
             fontSize: 28.sp,
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
           ),
         ),
-        SizedBox(height: 30.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
+          child: Container(
+            width: double.infinity.w,
+            height: 1.h,
+            color: Colors.black,
+          ),
+        ),
         Text(
           'Login to your Account',
           style: TextStyle(
-            fontSize: 20.sp,
+            fontSize: 24.sp,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF1F2937),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         SizedBox(height: 20.h),

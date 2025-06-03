@@ -2,12 +2,11 @@ import 'package:booke_store/feattures/login/data/models/login_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/helpers/constants.dart';
-import '../../../../core/helpers/shared_pref_helper.dart';
+import '../../../../core/widgets/modern_app_bar.dart';
 import 'widgets/admin_authors_page.dart';
 import 'widgets/admin_books_page.dart';
 import 'widgets/admin_profile_page.dart';
-import 'widgets/modern_buttom_nav_bar.dart';
+import '../../../../core/widgets/google_nav_bar_widget.dart';
 
 // Main Admin Homepage Widget
 class AdminHomepage extends StatefulWidget {
@@ -51,88 +50,44 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey[100],
-          elevation: 1, // Subtle shadow
-          title: Container(
-            height: 40.h, // Constrain height
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20), // Rounded corners
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 3,
-                  offset: const Offset(0, 1), // changes position of shadow
-                ),
-              ],
-            ),
-            child: _selectedIndex == 2
-                ? Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Text(
-                      'Profile ${user.username ?? ''}',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[800],
-                        letterSpacing: 0.3,
-                      ),
-                    ))
-                : TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search books, authors...',
-                      hintStyle: TextStyle(color: Colors.grey[500]),
-                      prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                      border: InputBorder.none, // Remove default border
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 15.0), // Adjust padding
-                    ),
-                    onSubmitted: (value) {
-                      // Handle search submission logic here
-                      print('Searching for: $value');
-                      // You might want to navigate to a search results page
-                      // or filter the current view based on the search term.
-                    },
-                  ),
+      appBar: _selectedIndex != 2
+          ? ModernAppBar(
+              selectedIndex: _selectedIndex,
+              searchController: _searchController,
+              username: user.username,
+              onNotificationTap: () async {
+                // Handle notification tap
+                print("Notification tapped");
+              },
+              onSearchSubmitted: (value) {
+                print('Searching for: $value');
+                // Handle search logic
+              },
+            )
+          : null,
+      body: Stack(
+        children: [
+          IndexedStack(
+            // Use IndexedStack to keep state of pages
+            index: _selectedIndex,
+            children: [
+              AdminBooksPage(),
+              AdminAuthorsPage(),
+              AdminProfilePage(adminInfo: user),
+            ],
           ),
-          // Optional: Add actions like notifications or settings
-          actions: [
-            _selectedIndex == 2
-                ? SizedBox()
-                : IconButton(
-                    icon:
-                        Icon(Icons.notifications_none, color: Colors.grey[800]),
-                    onPressed: () async {
-                      // Handle notifications action
-                      final userToken = await SharedPrefHelper.getString(
-                          SharedPrefKeys.userToken);
-                      print(userToken);
-                      final userData =
-                          await SharedPrefHelper.getString('username');
-                      print('username from storage : ${userData}');
-                    },
-                  ),
-          ],
-        ),
-        // Display the currently selected page from the list
-        body: IndexedStack(
-          // Use IndexedStack to keep state of pages
-          index: _selectedIndex,
-          children: [
-            AdminBooksPage(),
-            const AdminAuthorsPage(),
-            AdminProfilePage(adminInfo: user),
-          ],
-        ),
-        // Add the Bottom Navigation Bar
-        bottomNavigationBar: ModernBottomNavBar(
-          selectedIndex: _selectedIndex,
-          onItemTapped: _onItemTapped,
-        ));
+          Positioned(
+            bottom: 10.h,
+            left: 0.w,
+            right: 0.w,
+            child: GoogleNavBarWidget(
+              selectedIndex: _selectedIndex,
+              onTabChange: _onItemTapped,
+            ),
+          )
+        ],
+      ),
+      // Add the Bottom Navigation Bar
+    );
   }
 }
