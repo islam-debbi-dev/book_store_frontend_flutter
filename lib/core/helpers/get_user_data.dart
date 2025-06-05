@@ -1,6 +1,6 @@
 import 'constants.dart';
 import 'shared_pref_helper.dart';
-import '../../feattures/login/data/models/login_res.dart';
+import '../../features/login/data/models/login_res.dart';
 
 class GetUserData {
   Future<LoginRes> getUserDataFromStorage() async {

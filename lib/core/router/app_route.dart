@@ -1,16 +1,19 @@
-import 'package:booke_store/feattures/admin/adminhome/data/repo/home_repo.dart';
-import 'package:booke_store/feattures/admin/adminhome/logic/admin_home_cubit.dart';
-import 'package:booke_store/feattures/login/logic/login_cubit.dart';
-import 'package:booke_store/feattures/login/presentation/login_screen.dart';
-import 'package:booke_store/feattures/registration/logic/registration_cubit.dart';
+import 'package:booke_store/features/admin/adminhome/data/repo/home_repo.dart';
+import 'package:booke_store/features/admin/adminhome/logic/admin_home_cubit.dart';
+import 'package:booke_store/features/login/logic/login_cubit.dart';
+import 'package:booke_store/features/login/presentation/login_screen.dart';
+import 'package:booke_store/features/registration/logic/registration_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../feattures/admin/adminhome/presentation/admin_home_page.dart';
-import '../../feattures/login/data/models/login_res.dart';
-import '../../feattures/login/data/repo/login_repo.dart';
-import '../../feattures/user/home/presentation/homepage.dart';
-import '../../feattures/registration/data/repo/registration_repo.dart';
-import '../../feattures/registration/presentation/registration.dart';
+import '../../features/admin/adminhome/presentation/admin_home_page.dart';
+import '../../features/edit_profile/data/repository/profile_repository.dart';
+import '../../features/edit_profile/logic/cubit/profile_cubit.dart';
+import '../../features/edit_profile/presentation/edit_profile.dart';
+import '../../features/login/data/models/login_res.dart';
+import '../../features/login/data/repo/login_repo.dart';
+import '../../features/user/home/presentation/homepage.dart';
+import '../../features/registration/data/repo/registration_repo.dart';
+import '../../features/registration/presentation/registration.dart';
 import '../service/Api.dart';
 import 'constants_router.dart';
 
@@ -47,6 +50,12 @@ class AppRouter {
                     ),
                   ));
         }
+      case editProfile:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => ProfileCubit(ProfileRepository(Api())),
+                  child: EditProfile(),
+                ));
       case homepage:
         if (arguments is LoginRes) {
           return MaterialPageRoute(builder: (_) => Homepage(arguments));

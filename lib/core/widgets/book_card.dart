@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../feattures/admin/adminhome/data/models/book.dart';
+import '../../features/admin/adminhome/data/models/book.dart';
 
 class BookCard extends StatelessWidget {
   final Book data;
@@ -61,32 +61,32 @@ class BookCard extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8.h),
+
+              if (data.title != null)
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.h),
+                    child: Text(
+                      data.title!,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+
               // Content Section
               Expanded(
-                flex: 3,
+                flex: 1,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 7.h, vertical: 9.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Title
-                      if (data.title != null)
-                        Text(
-                          data.title!,
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-
-                      SizedBox(height: 16.h),
-
-                      // Author Section
-                      if (data.author != null)
-                        Row(
+                  padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h),
+                  child: data.author != null
+                      ? Row(
                           children: [
                             CircleAvatar(
                               radius: 12.r,
@@ -122,9 +122,8 @@ class BookCard extends StatelessWidget {
                               ),
                             ),
                           ],
-                        ),
-                    ],
-                  ),
+                        )
+                      : null,
                 ),
               ),
 
@@ -138,7 +137,7 @@ class BookCard extends StatelessWidget {
                       padding: EdgeInsets.only(left: 5.w),
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
+                          horizontal: 10.w,
                           vertical: 8.h,
                         ),
                         decoration: BoxDecoration(
