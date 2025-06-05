@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../feattures/admin/adminhome/data/models/author.dart';
+import '../../../features/admin/adminhome/data/models/author.dart';
 
 Widget MinimalCard(
   BuildContext context,
@@ -58,7 +58,10 @@ Widget MinimalCard(
   );
 }
 
-Widget Avatar({required double size, required BuildContext context, bool hasBorder = true}) {
+Widget Avatar(
+    {required double size,
+    required BuildContext context,
+    bool hasBorder = true}) {
   return Container(
     width: size,
     height: size,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class EditableProfilePicture extends StatefulWidget {
   final double size;
 
-  const EditableProfilePicture({super.key, this.size = 120});
+  const EditableProfilePicture(int i, {super.key, this.size = 120});
 
   @override
   State<EditableProfilePicture> createState() => _EditableProfilePictureState();
@@ -13,13 +14,24 @@ class EditableProfilePicture extends StatefulWidget {
 
 class _EditableProfilePictureState extends State<EditableProfilePicture> {
   File? _imageFile;
+  bool _isPicking = false; // Add this flag
 
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+    if (_isPicking) return; // Prevent multiple pickers
+    setState(() {
+      _isPicking = true;
+    });
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = File(pickedFile.path);
+        });
+      }
+    } finally {
       setState(() {
-        _imageFile = File(pickedFile.path);
+        _isPicking = false;
       });
     }
   }
@@ -37,17 +49,17 @@ class _EditableProfilePictureState extends State<EditableProfilePicture> {
               : null,
         ),
         Positioned(
-          bottom: 0,
-          right: 4,
+          bottom: 0.h,
+          right: 4.w,
           child: GestureDetector(
             onTap: _pickImage,
             child: Container(
-              padding: const EdgeInsets.all(6),
+              padding: EdgeInsets.all(6.sp),
               decoration: const BoxDecoration(
                 color: Colors.green,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.edit, size: 20, color: Colors.white),
+              child: Icon(Icons.edit, size: 20.sp, color: Colors.white),
             ),
           ),
         ),

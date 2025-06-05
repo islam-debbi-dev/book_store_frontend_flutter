@@ -1,11 +1,12 @@
-import 'package:booke_store/feattures/admin/adminhome/data/models/book.dart';
-import 'package:booke_store/feattures/login/data/models/login_req.dart';
-import 'package:booke_store/feattures/registration/data/models/registration_res.dart';
+import 'package:booke_store/features/admin/adminhome/data/models/book.dart';
+import 'package:booke_store/features/login/data/models/login_req.dart';
+import 'package:booke_store/features/registration/data/models/registration_res.dart';
 import 'package:dio/dio.dart';
 
-import '../../feattures/admin/adminhome/data/models/author.dart';
-import '../../feattures/login/data/models/login_res.dart';
-import '../../feattures/registration/data/models/registration_req.dart';
+import '../../features/admin/adminhome/data/models/author.dart';
+import '../../features/login/data/models/login_res.dart';
+import '../../features/edit_profile/data/models/user_profile_res.dart';
+import '../../features/registration/data/models/registration_req.dart';
 import 'api_constants.dart';
 import 'api_error_model.dart';
 import 'dio_generate.dart';
@@ -40,6 +41,20 @@ class Api {
     if (response.statusCode == 201) {
       final data = response.data as Map<String, dynamic>;
       return RegistrationRes.fromJson(data);
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
+    }
+  }
+
+  // fetch current user
+  Future<dynamic> getCurrentUser() async {
+    final response = await dio.get('$baseUrl$currentuser');
+
+    if (response.statusCode == 200) {
+      final data = response.data as Map<String, dynamic>;
+      return UserProfileRes.fromJson(data);
     } else {
       final data = response.data as Map<String, dynamic>;
 

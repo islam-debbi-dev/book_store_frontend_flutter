@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../helpers/constants.dart';
-import '../helpers/shared_pref_helper.dart';
-import '../router/constants_router.dart';
-
 class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
   final TextEditingController searchController;
@@ -64,7 +60,7 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             );
           },
-          child: selectedIndex == 2 ? ProfileTitle() : SearchField(context),
+          child: selectedIndex == 2 ? null : SearchField(context),
         ),
         actions: [
           if (selectedIndex != 2) NotificationButton(),

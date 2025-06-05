@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../feattures/admin/adminhome/data/models/author.dart';
+import '../../../features/admin/adminhome/data/models/author.dart';
 
 Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
     Author author, bool showNationality,

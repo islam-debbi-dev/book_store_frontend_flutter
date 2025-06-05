@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -9,10 +10,10 @@ class GoogleNavBarWidget extends StatelessWidget {
   final Function(int) onTabChange;
 
   const GoogleNavBarWidget({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.onTabChange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,12 +55,12 @@ class GoogleNavBarWidget extends StatelessWidget {
                   activeColor: Theme.of(context).colorScheme.primary,
                   tabBackgroundColor:
                       Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                  tabs: const [
-                    GButton(
+                  tabs: [
+                    const GButton(
                       icon: Icons.book_outlined,
                       text: 'Books',
                     ),
-                    GButton(
+                    const GButton(
                       icon: Icons.people_outline,
                       text: 'Authors',
                     ),

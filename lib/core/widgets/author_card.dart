@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../feattures/admin/adminhome/data/models/author.dart';
+import '../../features/admin/adminhome/data/models/author.dart';
 import 'cards/compact_card.dart';
 import 'cards/detailed_card.dart';
 import 'cards/minimal_card.dart';
