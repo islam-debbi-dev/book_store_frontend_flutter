@@ -17,10 +17,17 @@ class AdminHomeCubit extends Cubit<AdminHomeState> {
 
     try {
       final books = await homeRepo.GetBooks();
-      emit(state.copyWith(
-        bookStatus: DataStatus.success,
-        books: books,
-      ));
+      books.when(success: (data) {
+        emit(state.copyWith(
+          bookStatus: DataStatus.success,
+          books: data,
+        ));
+      }, failure: (error) {
+        emit(state.copyWith(
+          bookStatus: DataStatus.error,
+          bookErrorMessage: error.apiErrorModel.message ?? '',
+        ));
+      });
     } catch (e) {
       emit(state.copyWith(
         bookStatus: DataStatus.error,
@@ -40,24 +47,24 @@ class AdminHomeCubit extends Cubit<AdminHomeState> {
     // Set status to loading, keeping existing authors if not initial load
     emit(state.copyWith(authorStatus: DataStatus.loading));
 
-    try {
-      // Assuming GetAuthor fetches the *next* batch based on pageNumber
-      final newAuthors = await homeRepo.GetAuthor(pageNumber, authorsPerPage);
-
-      if (newAuthors.isEmpty) {
+    // Assuming GetAuthor fetches the *next* batch based on pageNumber
+    final newAuthors = await homeRepo.GetAuthor(pageNumber, authorsPerPage);
+    newAuthors.when(success: (data) {
+      if (data.isEmpty) {
         emit(state.copyWith(
             authorStatus: DataStatus.success, hasReachedMaxAuthors: true));
       } else {
         // Append new authors to the existing list
         emit(state.copyWith(
           authorStatus: DataStatus.success,
-          authors: List.of(state.authors)..addAll(newAuthors),
+          authors: List.of(state.authors)..addAll(data),
           hasReachedMaxAuthors: false, // Reset in case it was true before
         ));
       }
-    } catch (e) {
+    }, failure: (error) {
       emit(state.copyWith(
-          authorStatus: DataStatus.error, authorErrorMessage: e.toString()));
-    }
+          authorStatus: DataStatus.error,
+          authorErrorMessage: error.apiErrorModel.message ?? ''));
+    });
   }
 }

@@ -1,4 +1,3 @@
-import 'package:booke_store/features/admin/adminhome/presentation/widgets/error_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../logic/cubit/profile_cubit.dart';
@@ -16,7 +15,6 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<ProfileCubit>().getUserProfile();
   }
@@ -36,7 +34,14 @@ class _EditProfileState extends State<EditProfile> {
           } else if (state is ProfileError) {
             return errorWidgetProfile(state.errorMessage, context);
           }
-          return Center(child: Text('No profile loaded.'));
+          // Handle other states as needed
+          return Center(
+              child: TextButton(
+            child: Text('reload'),
+            onPressed: () {
+              context.read<ProfileCubit>().getUserProfile();
+            },
+          ));
         },
       ),
     );

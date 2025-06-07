@@ -48,7 +48,7 @@ class Profile extends StatelessWidget {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
@@ -61,21 +61,26 @@ class Profile extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  MenuItem(Icons.edit, "Edit Profile ", () {
+                  MenuItem(Icons.edit, Theme.of(context).colorScheme.secondary,
+                      "Edit Profile ", () {
                     Navigator.pushNamed(context, editProfile);
                     // handle navigation
                   }),
-                  MenuItem(Icons.list_alt, "List project", () {
+                  MenuItem(
+                      Icons.list_alt,
+                      Theme.of(context).colorScheme.secondary,
+                      "List project", () {
                     // handle navigation
                   }),
-                  MenuItem(Icons.settings_outlined, "Settings", () {
+                  MenuItem(Icons.settings_outlined,
+                      Theme.of(context).colorScheme.secondary, "Settings", () {
+                    Navigator.pushNamed(context, settingsPage);
+                  }),
+                  MenuItem(Icons.info_outline,
+                      Theme.of(context).colorScheme.secondary, "About", () {
                     // handle navigation
                   }),
-                  MenuItem(Icons.info_outline, "About", () {
-                    // handle navigation
-                  }),
-                  SizedBox(height: 5.h),
-                  const Divider(),
+                  SizedBox(height: 15.h),
                   LogoutItem(() {
                     clearPageNumbers();
                     SharedPrefHelper.clearAllData();
@@ -92,9 +97,10 @@ class Profile extends StatelessWidget {
   }
 }
 
-Widget MenuItem(IconData icon, String title, VoidCallback onTap) {
+Widget MenuItem(
+    IconData icon, Color iconColor, String title, VoidCallback onTap) {
   return ListTile(
-    leading: Icon(icon, color: Colors.green),
+    leading: Icon(icon, color: iconColor),
     title: Text(title),
     trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
     onTap: onTap,

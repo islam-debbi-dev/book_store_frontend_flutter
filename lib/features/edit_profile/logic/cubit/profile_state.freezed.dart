@@ -204,4 +204,109 @@ class _$ProfileErrorCopyWithImpl<$Res> implements $ProfileErrorCopyWith<$Res> {
   }
 }
 
+/// @nodoc
+
+class ProfileUpdateLoading implements ProfileState {
+  const ProfileUpdateLoading();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ProfileUpdateLoading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileState.updateLoading()';
+  }
+}
+
+/// @nodoc
+
+class ProfileUpdateSuccess implements ProfileState {
+  const ProfileUpdateSuccess();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ProfileUpdateSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileState.updateSuccess()';
+  }
+}
+
+/// @nodoc
+
+class ProfileUpdateError implements ProfileState {
+  const ProfileUpdateError(this.errorMessage);
+
+  final String errorMessage;
+
+  /// Create a copy of ProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ProfileUpdateErrorCopyWith<ProfileUpdateError> get copyWith =>
+      _$ProfileUpdateErrorCopyWithImpl<ProfileUpdateError>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is ProfileUpdateError &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorMessage);
+
+  @override
+  String toString() {
+    return 'ProfileState.updateError(errorMessage: $errorMessage)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ProfileUpdateErrorCopyWith<$Res>
+    implements $ProfileStateCopyWith<$Res> {
+  factory $ProfileUpdateErrorCopyWith(
+          ProfileUpdateError value, $Res Function(ProfileUpdateError) _then) =
+      _$ProfileUpdateErrorCopyWithImpl;
+  @useResult
+  $Res call({String errorMessage});
+}
+
+/// @nodoc
+class _$ProfileUpdateErrorCopyWithImpl<$Res>
+    implements $ProfileUpdateErrorCopyWith<$Res> {
+  _$ProfileUpdateErrorCopyWithImpl(this._self, this._then);
+
+  final ProfileUpdateError _self;
+  final $Res Function(ProfileUpdateError) _then;
+
+  /// Create a copy of ProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? errorMessage = null,
+  }) {
+    return _then(ProfileUpdateError(
+      null == errorMessage
+          ? _self.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
 // dart format on

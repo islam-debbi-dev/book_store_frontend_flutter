@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/helpers/constants.dart';
+
 Widget errorWidget(String errorMessage, context) {
   return Center(
     child: Column(
@@ -19,10 +21,22 @@ Widget errorWidget(String errorMessage, context) {
         // button
         SizedBox(height: 16.h),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context)
+                  .elevatedButtonTheme
+                  .style
+                  ?.backgroundColor
+                  ?.resolve({})),
           onPressed: () {
             BlocProvider.of<AdminHomeCubit>(context).fetchBooks();
+            BlocProvider.of<AdminHomeCubit>(context)
+                .fetchAuthors(pageNumberAuthor);
           },
-          child: Text("Retry"),
+          child: Text(
+            "Retry",
+            style:
+                TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+          ),
         ),
       ],
     ),

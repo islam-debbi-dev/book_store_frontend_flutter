@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:booke_store/core/router/constants_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -56,17 +55,26 @@ class GoogleNavBarWidget extends StatelessWidget {
                   tabBackgroundColor:
                       Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   tabs: [
-                    const GButton(
+                    GButton(
                       icon: Icons.book_outlined,
+                      iconColor: Theme.of(context).iconTheme.color,
+                      iconActiveColor: Theme.of(context).iconTheme.color,
                       text: 'Books',
+                      textColor: Theme.of(context).textTheme.bodyLarge!.color,
                     ),
-                    const GButton(
+                    GButton(
                       icon: Icons.people_outline,
+                      iconColor: Theme.of(context).iconTheme.color,
+                      iconActiveColor: Theme.of(context).iconTheme.color,
                       text: 'Authors',
+                      textColor: Theme.of(context).textTheme.bodyLarge!.color,
                     ),
                     GButton(
                       icon: Icons.person_outline,
+                      iconColor: Theme.of(context).iconTheme.color,
+                      iconActiveColor: Theme.of(context).iconTheme.color,
                       text: 'Profile',
+                      textColor: Theme.of(context).textTheme.bodyLarge!.color,
                     ),
                   ],
                 ),

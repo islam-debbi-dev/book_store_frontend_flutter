@@ -9,7 +9,16 @@ class UserProfileRes {
   String? email;
   String? username;
   bool? isAdmin;
-  UserProfileRes({required this.id, this.email, this.username, this.isAdmin});
+  String? password;
+
+  UserProfileRes(
+      {required this.id,
+      this.email,
+      this.username,
+      this.isAdmin,
+      this.password});
   factory UserProfileRes.fromJson(Map<String, dynamic> json) =>
       _$UserProfileResFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserProfileResToJson(this);
 }

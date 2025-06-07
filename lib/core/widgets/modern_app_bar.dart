@@ -20,53 +20,33 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white,
-            Colors.grey.shade50,
-          ],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            offset: const Offset(0, 2),
-            blurRadius: 12,
-            spreadRadius: 0,
-          ),
-        ],
+    return AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      elevation: 6,
+      centerTitle: true,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      toolbarHeight: 70,
+      title: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0, 0.3),
+                end: Offset.zero,
+              ).animate(animation),
+              child: child,
+            ),
+          );
+        },
+        child: selectedIndex == 2 ? null : SearchField(context),
       ),
-      child: AppBar(
-        automaticallyImplyLeading: false,
-        // backgroundColor: Colors.transparent,
-        elevation: 10,
-        centerTitle: true,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        toolbarHeight: 70,
-        title: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 0.3),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
-              ),
-            );
-          },
-          child: selectedIndex == 2 ? null : SearchField(context),
-        ),
-        actions: [
-          if (selectedIndex != 2) NotificationButton(),
-          const SizedBox(width: 8),
-        ],
-      ),
+      actions: [
+        if (selectedIndex != 2) FilterButton(context),
+        const SizedBox(width: 8),
+      ],
     );
   }
 
@@ -180,6 +160,23 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         onSubmitted: onSearchSubmitted,
+      ),
+    );
+  }
+
+  //filter
+  Widget FilterButton(context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 8),
+      child: IconButton(
+        icon: Icon(
+          Icons.filter_list,
+          color: Colors.white,
+          size: 24,
+        ),
+        onPressed: () {},
+        splashRadius: 24,
+        tooltip: 'Filter',
       ),
     );
   }

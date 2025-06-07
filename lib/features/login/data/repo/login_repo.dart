@@ -1,5 +1,6 @@
 import 'package:booke_store/core/service/Api.dart';
 import 'package:booke_store/core/service/api_error_handler.dart';
+import 'package:booke_store/core/service/api_error_model.dart';
 import 'package:booke_store/core/service/api_result.dart';
 import 'package:booke_store/features/login/data/models/login_req.dart';
 import 'package:booke_store/features/login/data/models/login_res.dart';
@@ -15,7 +16,8 @@ class LoginRepo {
       if (data is LoginRes) {
         return ApiResult.success(data);
       } else {
-        return ApiResult.failure(ErrorHandler.handle(data));
+        return ApiResult.failure(
+            ErrorHandler.handle(ApiErrorModel.fromJson(data)));
       }
     } catch (e) {
       return ApiResult.failure(ErrorHandler.handle(e));

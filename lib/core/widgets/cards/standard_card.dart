@@ -11,7 +11,7 @@ Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
         BoxDecoration(borderRadius: BorderRadius.circular(16.r), boxShadow: [
       BoxShadow(
         // user primary color
-        color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+        color: Theme.of(context).shadowColor,
         blurRadius: 8.r,
         offset: Offset(0, 2.h),
       )
@@ -20,7 +20,7 @@ Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
     height: height.h,
     child: Card(
       elevation: 6,
-      shadowColor: Colors.black.withOpacity(0.1),
+      shadowColor: Theme.of(context).shadowColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),
@@ -42,7 +42,7 @@ Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
                   style: TextStyle(
                     fontSize: 14.sp,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,
@@ -85,10 +85,7 @@ Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
                         Icon(
                           Icons.public,
                           size: 16.sp,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.7),
+                          color: Theme.of(context).iconTheme.color,
                         ),
                         SizedBox(width: 6.w),
                         Expanded(
@@ -97,7 +94,8 @@ Widget StandardCard(BuildContext context, VoidCallback? onTap, String fullName,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).colorScheme.primary,
+                              color:
+                                  Theme.of(context).textTheme.bodyMedium?.color,
                             ),
                           ),
                         ),
@@ -129,7 +127,7 @@ Widget Avatar(
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  color: Theme.of(context).shadowColor,
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),

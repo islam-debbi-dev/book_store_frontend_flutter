@@ -43,6 +43,7 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _selectedIndex != 2
           ? ModernAppBar(
               selectedIndex: _selectedIndex,
