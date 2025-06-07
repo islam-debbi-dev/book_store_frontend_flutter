@@ -12,15 +12,20 @@ import '../../features/edit_profile/presentation/edit_profile.dart';
 import '../../features/login/data/models/login_res.dart';
 import '../../features/login/data/repo/login_repo.dart';
 import '../../features/user/home/presentation/homepage.dart';
-import '../../features/registration/data/repo/registration_repo.dart';
-import '../../features/registration/presentation/registration.dart';
 import '../service/Api.dart';
 import 'constants_router.dart';
+import '../../features/settings/presentation/settings.dart';
+import '../../features/registration/data/repo/registration_repo.dart';
+import '../../features/registration/presentation/registration.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     final arguments = settings.arguments;
     switch (settings.name) {
+      case settingsPage:
+        return MaterialPageRoute(
+          builder: (_) => const SettingsPage(),
+        );
       case login:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

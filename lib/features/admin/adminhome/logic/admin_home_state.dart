@@ -15,6 +15,11 @@ class AdminHomeState extends Equatable {
   final bool hasReachedMaxAuthors;
   final String authorErrorMessage;
 
+  // filter authors
+  final DataStatus filterAuthorStatus;
+  final List<Author> filterAuthors;
+  final String filterAuthorErrorMessage;
+
   const AdminHomeState({
     // Book defaults
     this.bookStatus = DataStatus.initial,
@@ -25,6 +30,10 @@ class AdminHomeState extends Equatable {
     this.authors = const <Author>[],
     this.hasReachedMaxAuthors = false,
     this.authorErrorMessage = '',
+    // filter authors
+    this.filterAuthorStatus = DataStatus.initial,
+    this.filterAuthors = const <Author>[],
+    this.filterAuthorErrorMessage = '',
   });
 
   AdminHomeState copyWith({

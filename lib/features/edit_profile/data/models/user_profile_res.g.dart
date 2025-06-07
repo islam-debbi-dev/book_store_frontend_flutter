@@ -12,6 +12,7 @@ UserProfileRes _$UserProfileResFromJson(Map<String, dynamic> json) =>
       email: json['email'] as String?,
       username: json['username'] as String?,
       isAdmin: json['isAdmin'] as bool?,
+      password: json['password'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileResToJson(UserProfileRes instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$UserProfileResToJson(UserProfileRes instance) =>
       'email': instance.email,
       'username': instance.username,
       'isAdmin': instance.isAdmin,
+      'password': instance.password,
     };

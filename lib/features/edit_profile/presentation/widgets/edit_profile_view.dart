@@ -1,9 +1,13 @@
 import 'package:booke_store/features/edit_profile/data/models/user_profile_res.dart';
+import 'package:booke_store/features/edit_profile/logic/cubit/profile_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/widgets/edit_able_profile_pic.dart';
+import 'clipper_background.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key, required this.userProfile});
@@ -46,22 +50,23 @@ class _EditProfileViewState extends State<EditProfileView> {
           },
         ),
         Center(
-          //top: MediaQuery.of(context).size.height.h * 0.25.h,
-          // Adjust this to center vertically in your ClipPath
           child: Container(
             padding: EdgeInsets.only(
-              top: 100.h,
+              top: 50.h,
             ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   EditableProfilePicture(50),
                   SizedBox(height: 20.h),
-                  Profilefield(Icons.person, user.username ?? ''),
-                  Profilefield(Icons.lock, "You can't See a Password "),
-                  Profilefield(Icons.email, user.email ?? ''),
-                  Profilefield(Icons.admin_panel_settings,
-                      user.isAdmin.toString() ?? ''),
+                  Profilefield('username', Icons.person, user.username ?? '',
+                      context, user),
+                  Profilefield('password', Icons.lock,
+                      "You can't See a Password ", context, user),
+                  Profilefield(
+                      'email', Icons.email, user.email ?? '', context, user),
+                  Profilefield('isAdmin', Icons.admin_panel_settings,
+                      user.isAdmin.toString(), context, user),
                 ],
               ),
             ),
@@ -72,51 +77,9 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 }
 
-// Custom clipper for pink background
-class CurvedClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 100);
-
-    // Create curved bottom
-    // path.quadraticBezierTo(
-    //     size.width * 0.5, size.height + 50, size.width, size.height - 100);
-
-    path.cubicTo(size.width * 0.2, size.height - 70, size.width * 0.8,
-        size.height + 60, size.width, size.height - 80);
-    path.lineTo(size.width, 0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-// Custom clipper for blue background (different curve)
-class BlueCurvedClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 30);
-
-    // Create different curved pattern
-    path.cubicTo(size.width * 0.1, size.height - 80, size.width * 0.8,
-        size.height + 80, size.width, size.height - 100);
-
-    path.lineTo(size.width, 0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-Widget Profilefield(IconData icon, String title, {bool isLogout = false}) {
+Widget Profilefield(String titleOfField, IconData icon, String title,
+    BuildContext context1, UserProfileRes user,
+    {bool isLogout = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
     child: Slidable(
@@ -125,8 +88,47 @@ Widget Profilefield(IconData icon, String title, {bool isLogout = false}) {
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {
-              // TODO: Add edit action
+            onPressed: (context) async {
+              String? result = await showCupertinoDialog<String>(
+                context: context,
+                builder: (BuildContext context) {
+                  TextEditingController controller =
+                      TextEditingController(text: title);
+                  return CupertinoAlertDialog(
+                    title: Text('Edit'),
+                    content: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        CupertinoTextField(
+                          controller: controller,
+                          placeholder: 'Enter new value',
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      CupertinoDialogAction(
+                        child: Text('Cancel'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                      CupertinoDialogAction(
+                        isDefaultAction: true,
+                        onPressed: () async {
+                          await updateUser(
+                              context1, controller, titleOfField, user);
+                          await context1
+                              .read<ProfileCubit>()
+                              .getUserProfile(); // Call this first
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Update'),
+                      ),
+                    ],
+                  );
+                },
+              );
+              if (result != null && result != title) {
+                // Call the update function with the new value
+              }
             },
             backgroundColor: Colors.blue,
             foregroundColor: Colors.white,
@@ -156,9 +158,24 @@ Widget Profilefield(IconData icon, String title, {bool isLogout = false}) {
             title,
             style: TextStyle(color: isLogout ? Colors.red : Colors.black),
           ),
-          onTap: () {},
         ),
       ),
     ),
   );
+}
+
+Future<void> updateUser(context, TextEditingController controller, String value,
+    UserProfileRes user) async {
+  if (value == 'username') {
+    BlocProvider.of<ProfileCubit>(context).updateUserProfile(
+        UserProfileRes(id: user.id, username: controller.text.toString()));
+  }
+  if (value == 'email') {
+    BlocProvider.of<ProfileCubit>(context).updateUserProfile(
+        UserProfileRes(id: user.id, email: controller.text.toString()));
+  }
+  if (value == 'password') {
+    BlocProvider.of<ProfileCubit>(context).updateUserProfile(
+        UserProfileRes(id: user.id, password: controller.text.toString()));
+  }
 }

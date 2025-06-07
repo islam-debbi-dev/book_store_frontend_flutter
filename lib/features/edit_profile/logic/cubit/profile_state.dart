@@ -11,4 +11,10 @@ class ProfileState with _$ProfileState {
   const factory ProfileState.success(UserProfileRes userProfile) =
       ProfileSuccess;
   const factory ProfileState.error(String errorMessage) = ProfileError;
+
+  // update user states
+  const factory ProfileState.updateLoading() = ProfileUpdateLoading;
+  const factory ProfileState.updateSuccess() = ProfileUpdateSuccess;
+  const factory ProfileState.updateError(String errorMessage) =
+      ProfileUpdateError;
 }

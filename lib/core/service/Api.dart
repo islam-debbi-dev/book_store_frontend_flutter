@@ -62,45 +62,64 @@ class Api {
     }
   }
 
-  Future<List<Book>> GetBooks() async {
-    try {
-      final response = await dio.get('$baseUrl$GetAllBooks');
+  // update current user
+  Future<dynamic> updateCurrentUser(UserProfileRes userProfileRes) async {
+    String? update;
+    final Map<String, dynamic> updateJson = {};
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data as List<dynamic>;
-        final List<Book> books = data
-            .map((bookJson) => Book.fromJson(bookJson as Map<String, dynamic>))
-            .toList();
-        return books;
-      } else {
-        final errorMessage = 'Failed to load books: ${response.statusCode}';
-        throw Exception(errorMessage);
-      }
-    } catch (e) {
-      // Handle Dio errors or other exceptions
-      final errorMessage = 'Failed to load books: $e';
-      throw Exception(errorMessage);
+    if (userProfileRes.password != null) {
+      update = userProfileRes.password.toString();
+      updateJson['password'] = update;
+    }
+    if (userProfileRes.email != null) {
+      update = userProfileRes.email.toString();
+      updateJson['email'] = update;
+    }
+    if (userProfileRes.username != null) {
+      update = userProfileRes.username.toString();
+      updateJson['username'] = update;
+    }
+
+    final response = await dio.put('$baseUrl$currentuser', data: updateJson);
+
+    if (response.statusCode != 200) {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
     }
   }
 
-  Future<List<Author>> GetAuthors([pageNumber = 1, authorsPerPage = 10]) async {
-    try {
-      final response = await dio.get(
-          '$baseUrl$GetAllAuthors?pageNumber=$pageNumber&authorsPerPage=$authorsPerPage');
+  // get books
+  Future<dynamic> GetBooks() async {
+    final response = await dio.get('$baseUrl$GetAllBooks');
 
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data as List<dynamic>;
-        final List<Author> author = data
-            .map(
-                (bookJson) => Author.fromJson(bookJson as Map<String, dynamic>))
-            .toList();
-        return author;
-      } else {
-        final errorMessage = 'Failed to load authors: ${response.statusCode}';
-        throw Exception(errorMessage);
-      }
-    } catch (e) {
-      throw Exception('Failed to load authors: $e');
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data as List<dynamic>;
+      final List<Book> books = data
+          .map((bookJson) => Book.fromJson(bookJson as Map<String, dynamic>))
+          .toList();
+      return books;
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
+    }
+  }
+
+  Future<dynamic> GetAuthors([pageNumber = 1, authorsPerPage = 10]) async {
+    final response = await dio.get(
+        '$baseUrl$GetAllAuthors?pageNumber=$pageNumber&authorsPerPage=$authorsPerPage');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data as List<dynamic>;
+      final List<Author> author = data
+          .map((bookJson) => Author.fromJson(bookJson as Map<String, dynamic>))
+          .toList();
+      return author;
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
     }
   }
 }
