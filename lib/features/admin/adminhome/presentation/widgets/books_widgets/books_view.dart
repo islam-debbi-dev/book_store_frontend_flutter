@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../logic/admin_home_cubit.dart';
 import '../../../../../../core/widgets/book_card.dart';
 import '../../../data/models/book.dart';
+import '../search_field.dart';
+import '../books_widgets/filter_books.dart';
 
 class BooksView extends StatefulWidget {
   const BooksView({super.key, required this.books, required this.isFiltered});
@@ -17,11 +19,28 @@ class BooksView extends StatefulWidget {
 class _BooksViewState extends State<BooksView> {
   late List<Book> books;
   late bool isFiltered;
+  String _searchText = '';
+  final TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
     books = widget.books;
     isFiltered = widget.isFiltered;
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Book> get _filteredBooks {
+    if (_searchText.isEmpty) return books;
+    return books
+        .where((book) => (book.title ?? '')
+            .toLowerCase()
+            .contains(_searchText.toLowerCase()))
+        .toList();
   }
 
   @override
@@ -32,6 +51,20 @@ class _BooksViewState extends State<BooksView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            width: double.infinity,
+            child: Row(children: [
+              SearchField(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchText = value;
+                  });
+                },
+              ),
+              FilterButton(context),
+            ]),
+          ),
           isFiltered
               ? Container(
                   child: Row(
@@ -53,6 +86,7 @@ class _BooksViewState extends State<BooksView> {
                   ),
                 )
               : Container(),
+
           // Grid Layout
           Expanded(
             child: GridView.builder(
@@ -62,14 +96,14 @@ class _BooksViewState extends State<BooksView> {
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
-              itemCount: books.length,
+              itemCount: _filteredBooks.length,
               itemBuilder: (context, index) {
                 return BookCard(
-                  data: books[index],
+                  data: _filteredBooks[index],
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Tapped: ${books[index].title}'),
+                        content: Text('Tapped: ${_filteredBooks[index].title}'),
                         behavior: SnackBarBehavior.floating,
                       ),
                     );

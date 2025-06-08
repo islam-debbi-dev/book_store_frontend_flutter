@@ -30,7 +30,7 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 6,
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle.light,
-      toolbarHeight: 70,
+      toolbarHeight: 70.h,
       title: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         transitionBuilder: (Widget child, Animation<double> animation) {
@@ -45,7 +45,7 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           );
         },
-        child: selectedIndex == 2 ? null : SearchField(context),
+        child: selectedIndex == 0 ? SearchField(context) : null,
       ),
       actions: [
         if (selectedIndex == 0) FilterButton(context),

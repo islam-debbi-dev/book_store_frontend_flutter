@@ -18,7 +18,7 @@ final ThemeData appThemeLight = ThemeData(
     buttonColor: Colors.grey.shade300,
     textTheme: ButtonTextTheme.primary,
   ),
-  shadowColor: Colors.black.withOpacity(0.1),
+  shadowColor: Colors.black.withOpacity(0.9),
   scaffoldBackgroundColor: Colors.white,
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: AppColors.primaryColor),
