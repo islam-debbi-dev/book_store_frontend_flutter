@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../features/admin/adminhome/logic/admin_home_cubit.dart';
 
 class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int selectedIndex;
@@ -44,7 +48,7 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: selectedIndex == 2 ? null : SearchField(context),
       ),
       actions: [
-        if (selectedIndex != 2) FilterButton(context),
+        if (selectedIndex == 0) FilterButton(context),
         const SizedBox(width: 8),
       ],
     );
@@ -174,10 +178,74 @@ class ModernAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
           size: 24,
         ),
-        onPressed: () {},
+        onPressed: () {
+          //show filter dialog
+          showPriceFilterDialog(context, (min, max) {
+            min = 0;
+            max = 1000;
+            BlocProvider.of<AdminHomeCubit>(context).filterBooks(min, max);
+          });
+        },
         splashRadius: 24,
         tooltip: 'Filter',
       ),
+    );
+  }
+
+  void showPriceFilterDialog(
+      BuildContext context, void Function(int min, int max) onFilter) {
+    final minController = TextEditingController();
+    final maxController = TextEditingController();
+
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(
+            'Filter by Price',
+            style:
+                TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+          ),
+          content: Column(
+            children: [
+              SizedBox(height: 16),
+              CupertinoTextField(
+                placeholderStyle: Theme.of(context).textTheme.bodySmall,
+                controller: minController,
+                placeholder: 'Min Price',
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 12),
+              CupertinoTextField(
+                placeholderStyle: Theme.of(context).textTheme.bodySmall,
+                controller: maxController,
+                placeholder: 'Max Price',
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          actions: [
+            CupertinoDialogAction(
+              child:
+                  Text('Cancel', style: Theme.of(context).textTheme.bodyMedium),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoDialogAction(
+              isDefaultAction: true,
+              child:
+                  Text('Filter', style: Theme.of(context).textTheme.bodyMedium),
+              onPressed: () {
+                final min = int.tryParse(minController.text) ?? 0;
+                final max = int.tryParse(maxController.text) ?? 1000;
+                onFilter(min, max);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

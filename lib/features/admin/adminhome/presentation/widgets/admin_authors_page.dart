@@ -29,7 +29,7 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
         switch (state.authorStatus) {
           // Check authorStatus specifically
           case DataStatus.error:
-            return errorWidget(state.authorErrorMessage ?? '', context);
+            return errorWidget(state.authorErrorMessage, context);
           // Use authorErrorMessage
           case DataStatus.initial: // Show loading on initial state too
           case DataStatus.loading:

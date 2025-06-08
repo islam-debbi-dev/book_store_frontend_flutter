@@ -14,11 +14,12 @@ class AdminHomeState extends Equatable {
   final List<Author> authors;
   final bool hasReachedMaxAuthors;
   final String authorErrorMessage;
-
-  // filter authors
-  final DataStatus filterAuthorStatus;
-  final List<Author> filterAuthors;
-  final String filterAuthorErrorMessage;
+  // filter author
+  final DataStatus filterBookState;
+  final List<Book> filteredBooks;
+  final String filterBookErrorMessage;
+  // button filtered
+  final bool isFiltered;
 
   const AdminHomeState({
     // Book defaults
@@ -30,10 +31,12 @@ class AdminHomeState extends Equatable {
     this.authors = const <Author>[],
     this.hasReachedMaxAuthors = false,
     this.authorErrorMessage = '',
-    // filter authors
-    this.filterAuthorStatus = DataStatus.initial,
-    this.filterAuthors = const <Author>[],
-    this.filterAuthorErrorMessage = '',
+    // filter author defaults
+    this.filterBookState = DataStatus.initial,
+    this.filteredBooks = const <Book>[],
+    this.filterBookErrorMessage = '',
+    // button filtered
+    this.isFiltered = false,
   });
 
   AdminHomeState copyWith({
@@ -44,6 +47,12 @@ class AdminHomeState extends Equatable {
     List<Author>? authors,
     bool? hasReachedMaxAuthors,
     String? authorErrorMessage,
+    // filter author
+    DataStatus? filterBookState,
+    List<Book>? filteredBooks,
+    String? filterBookErrorMessage,
+    // button filtered
+    bool? isFiltered,
   }) {
     return AdminHomeState(
       bookStatus: bookStatus ?? this.bookStatus,
@@ -53,6 +62,11 @@ class AdminHomeState extends Equatable {
       authors: authors ?? this.authors,
       hasReachedMaxAuthors: hasReachedMaxAuthors ?? this.hasReachedMaxAuthors,
       authorErrorMessage: authorErrorMessage ?? this.authorErrorMessage,
+      filterBookState: filterBookState ?? this.filterBookState,
+      filteredBooks: filteredBooks ?? this.filteredBooks,
+      filterBookErrorMessage:
+          filterBookErrorMessage ?? this.filterBookErrorMessage,
+      isFiltered: isFiltered ?? this.isFiltered,
     );
   }
 
@@ -61,5 +75,8 @@ class AdminHomeState extends Equatable {
         bookStatus, books, bookErrorMessage, // Book props
         authorStatus, authors, hasReachedMaxAuthors,
         authorErrorMessage, // Author props
+        filterBookState, filteredBooks,
+        filterBookErrorMessage, // filter author props
+        isFiltered, // button filtered props
       ];
 }

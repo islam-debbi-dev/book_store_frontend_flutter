@@ -16,6 +16,7 @@ void main() {
     await tester.pumpWidget(BookStore(
       appRouter: AppRouter(),
       initialThemeMode: ThemeMode.light,
+      initialLocale: Locale('en'),
     ));
 
     // Verify that our counter starts at 0.

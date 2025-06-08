@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'book_store.dart';
 import 'core/helpers/constants.dart';
 import 'core/helpers/get_user_data.dart';
+import 'core/localization/cubit/locale_cubit.dart';
 import 'features/login/data/models/login_res.dart';
 
 import 'features/settings/logic/theme_cubit.dart';
@@ -17,7 +18,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await checkIfLoggedInUser();
   final ThemeMode savedThemeMode = await ThemeCubit.getSavedThemeMode();
-  runApp(BookStore(appRouter: AppRouter(), initialThemeMode: savedThemeMode));
+  final Locale savedLocale = await LocaleCubit.getSavedLocale();
+  runApp(BookStore(
+      appRouter: AppRouter(),
+      initialThemeMode: savedThemeMode,
+      initialLocale: savedLocale));
 }
 
 Future<void> checkIfLoggedInUser() async {

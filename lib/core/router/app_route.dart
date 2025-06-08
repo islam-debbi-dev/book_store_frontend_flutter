@@ -17,6 +17,9 @@ import 'constants_router.dart';
 import '../../features/settings/presentation/settings.dart';
 import '../../features/registration/data/repo/registration_repo.dart';
 import '../../features/registration/presentation/registration.dart';
+import '../../features/admin/adminhome/presentation/widgets/details_author.dart';
+
+import '../../features/admin/adminhome/data/models/author.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -55,6 +58,14 @@ class AppRouter {
                     ),
                   ));
         }
+      case detailsScreen:
+        final argument = settings.arguments as Author;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (context) => ProfileCubit(ProfileRepository(Api())),
+                  child: DetailsAuthor(author: argument),
+                ));
+
       case editProfile:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(

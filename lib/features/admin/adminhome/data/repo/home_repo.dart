@@ -36,4 +36,18 @@ class HomeRepo {
       return ApiResult.failure(ErrorHandler.handle(e));
     }
   }
+
+  Future<ApiResult<List<Book>>> filterBooks(int minPrice, int maxPrice) async {
+    try {
+      final data =
+          await api.filterBooks(minPrice: minPrice, maxPrice: maxPrice);
+      if (data is List<Book>) {
+        return ApiResult.success(data);
+      } else {
+        return ApiResult.failure(ErrorHandler.handle(data));
+      }
+    } catch (e) {
+      return ApiResult.failure(ErrorHandler.handle(e));
+    }
+  }
 }
