@@ -122,4 +122,22 @@ class Api {
       return ApiErrorModel.fromJson(data);
     }
   }
+
+  // filter books
+  Future<dynamic> filterBooks({int minPrice = 0, int maxPrice = 14}) async {
+    final response = await dio
+        .get('$baseUrl$books?minPrice=${minPrice}&maxPrice=${maxPrice}');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = response.data as List<dynamic>;
+      final List<Book> books = data
+          .map((bookJson) => Book.fromJson(bookJson as Map<String, dynamic>))
+          .toList();
+      return books;
+    } else {
+      final data = response.data as Map<String, dynamic>;
+
+      return ApiErrorModel.fromJson(data);
+    }
+  }
 }

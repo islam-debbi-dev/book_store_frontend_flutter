@@ -24,12 +24,21 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
       builder: (context, state) {
         switch (state.bookStatus) {
           case DataStatus.success:
-            return BooksView(books: state.books);
+            return BooksView(
+                books: state.isFiltered == true
+                    ? state.filteredBooks
+                    : state.books,
+                isFiltered: state.isFiltered);
 
           case DataStatus.loading:
             return const Center(child: CircularProgressIndicator());
           case DataStatus.error:
-            return Center(child: errorWidget(state.bookErrorMessage, context));
+            return Center(
+                child: errorWidget(
+                    state.isFiltered == true
+                        ? state.filterBookErrorMessage
+                        : state.bookErrorMessage,
+                    context));
           case DataStatus.initial:
             return const Center(
                 child: CircularProgressIndicator(

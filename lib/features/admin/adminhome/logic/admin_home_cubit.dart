@@ -21,17 +21,48 @@ class AdminHomeCubit extends Cubit<AdminHomeState> {
         emit(state.copyWith(
           bookStatus: DataStatus.success,
           books: data,
+          isFiltered: false,
         ));
       }, failure: (error) {
         emit(state.copyWith(
           bookStatus: DataStatus.error,
           bookErrorMessage: error.apiErrorModel.message ?? '',
+          isFiltered: false,
         ));
       });
     } catch (e) {
       emit(state.copyWith(
         bookStatus: DataStatus.error,
         bookErrorMessage: e.toString(),
+        isFiltered: false,
+      ));
+    }
+  }
+
+  // filter books
+  Future<void> filterBooks(int minPrice, int maxPrice) async {
+    emit(state.copyWith(bookStatus: DataStatus.loading));
+
+    try {
+      final books = await homeRepo.filterBooks(minPrice, maxPrice);
+      books.when(success: (data) {
+        emit(state.copyWith(
+          bookStatus: DataStatus.success,
+          filteredBooks: data,
+          isFiltered: true,
+        ));
+      }, failure: (error) {
+        emit(state.copyWith(
+          bookStatus: DataStatus.error,
+          filterBookErrorMessage: error.apiErrorModel.message ?? '',
+          isFiltered: false,
+        ));
+      });
+    } catch (e) {
+      emit(state.copyWith(
+        bookStatus: DataStatus.error,
+        filterBookErrorMessage: e.toString(),
+        isFiltered: false,
       ));
     }
   }

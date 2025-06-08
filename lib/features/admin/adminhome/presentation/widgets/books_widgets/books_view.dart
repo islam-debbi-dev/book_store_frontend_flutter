@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/widgets/book_card.dart';
-import '../../data/models/book.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../logic/admin_home_cubit.dart';
+import '../../../../../../core/widgets/book_card.dart';
+import '../../../data/models/book.dart';
 
 class BooksView extends StatefulWidget {
-  const BooksView({super.key, required this.books});
+  const BooksView({super.key, required this.books, required this.isFiltered});
   final List<Book> books;
+  final bool isFiltered;
+
   @override
   State<BooksView> createState() => _BooksViewState();
 }
 
 class _BooksViewState extends State<BooksView> {
   late List<Book> books;
-
+  late bool isFiltered;
   @override
   void initState() {
     super.initState();
     books = widget.books;
+    isFiltered = widget.isFiltered;
   }
 
   @override
@@ -28,6 +32,27 @@ class _BooksViewState extends State<BooksView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          isFiltered
+              ? Container(
+                  child: Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          onPressed: () {
+                            BlocProvider.of<AdminHomeCubit>(context)
+                                .fetchBooks();
+                          }),
+                      Text(
+                        'All Books',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium?.color,
+                          fontSize: 20.sp,
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : Container(),
           // Grid Layout
           Expanded(
             child: GridView.builder(

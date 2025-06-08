@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../../core/widgets/cards/author_Item.dart';
 import '../../../../../core/helpers/constants.dart';
 import '../../data/models/author.dart';
 import '../../logic/admin_home_cubit.dart';
@@ -65,16 +65,12 @@ class _AuthorsViewState extends State<AuthorsView> {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 0.8,
-              crossAxisSpacing: 16,
-              mainAxisSpacing: 16,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 10,
             ),
             itemCount: widget.authors.length,
             itemBuilder: (context, index) {
-              return AuthorCard(
-                author: widget.authors[index],
-                cardStyle: CardStyle.standard,
-                onTap: () => _showAuthorDetails(context, widget.authors[index]),
-              );
+              return CharacterItem(author: widget.authors[index]);
             },
           ),
           SizedBox(height: 100.h),
