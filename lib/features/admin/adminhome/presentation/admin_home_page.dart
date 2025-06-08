@@ -44,22 +44,6 @@ class _AdminHomepageState extends State<AdminHomepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        appBar: _selectedIndex != 2
-            ? ModernAppBar(
-                selectedIndex: _selectedIndex,
-                searchController: _searchController,
-                username: user.username,
-                onNotificationTap: () async {
-                  // Handle notification tap
-                  print("Notification tapped");
-                },
-                onSearchSubmitted: (value) {
-                  print('Searching for: $value');
-                  // Handle search logic
-                },
-              )
-            : null,
         body: Platform.isWindows == true
             ? homeBody(_selectedIndex, user, _onItemTapped)
             : OfflineBuilder(
