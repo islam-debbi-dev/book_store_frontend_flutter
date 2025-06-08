@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/author.dart';
+import '../../../data/models/author.dart';
 
 class DetailsAuthor extends StatelessWidget {
   final Author author;

@@ -17,7 +17,7 @@ import 'constants_router.dart';
 import '../../features/settings/presentation/settings.dart';
 import '../../features/registration/data/repo/registration_repo.dart';
 import '../../features/registration/presentation/registration.dart';
-import '../../features/admin/adminhome/presentation/widgets/details_author.dart';
+import '../../features/admin/adminhome/presentation/widgets/authors_widgets/details_author.dart';
 
 import '../../features/admin/adminhome/data/models/author.dart';
 

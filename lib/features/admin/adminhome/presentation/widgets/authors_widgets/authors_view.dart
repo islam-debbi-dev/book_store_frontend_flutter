@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../core/widgets/cards/author_Item.dart';
-import '../../../../../core/helpers/constants.dart';
-import '../../data/models/author.dart';
-import '../../logic/admin_home_cubit.dart';
-import '../../../../../core/widgets/author_card.dart';
+import 'author_Item.dart';
+import '../../../../../../core/helpers/constants.dart';
+import '../../../data/models/author.dart';
+import '../../../logic/admin_home_cubit.dart';
+import '../../../../../../core/widgets/author_card.dart';
 
 class AuthorsView extends StatefulWidget {
   const AuthorsView({super.key, required this.authors});
@@ -70,7 +70,12 @@ class _AuthorsViewState extends State<AuthorsView> {
             ),
             itemCount: widget.authors.length,
             itemBuilder: (context, index) {
-              return CharacterItem(author: widget.authors[index]);
+              return AuthorCard(
+                author: widget.authors[index],
+                cardStyle: CardStyle.standard,
+                onTap: () => _showAuthorDetails(context, widget.authors[index]),
+              );
+              // CharacterItem(author: widget.authors[index]);
             },
           ),
           SizedBox(height: 100.h),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/helpers/constants.dart';
 import '../../logic/admin_home_cubit.dart';
-import 'authors_view.dart';
+import 'authors_widgets/authors_view.dart';
 import 'error_home.dart';
 
 class AdminAuthorsPage extends StatefulWidget {
