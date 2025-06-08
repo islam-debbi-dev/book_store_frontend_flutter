@@ -6,6 +6,7 @@ import '../../../../../../core/helpers/constants.dart';
 import '../../../data/models/author.dart';
 import '../../../logic/admin_home_cubit.dart';
 import '../../../../../../core/widgets/author_card.dart';
+import '../../../../../../core/router/constants_router.dart';
 
 class AuthorsView extends StatefulWidget {
   const AuthorsView({super.key, required this.authors});
@@ -73,7 +74,8 @@ class _AuthorsViewState extends State<AuthorsView> {
               return AuthorCard(
                 author: widget.authors[index],
                 cardStyle: CardStyle.standard,
-                onTap: () => _showAuthorDetails(context, widget.authors[index]),
+                onTap: () => Navigator.pushNamed(context, detailsScreen,
+                    arguments: widget.authors[index]),
               );
               // CharacterItem(author: widget.authors[index]);
             },

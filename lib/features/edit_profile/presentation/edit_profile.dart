@@ -25,7 +25,7 @@ class _EditProfileState extends State<EditProfile> {
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           if (state is ProfileLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: showLoadingIndicator());
           }
           if (state is ProfileSuccess) {
             final user = state.userProfile;
@@ -46,4 +46,13 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+}
+
+Widget showLoadingIndicator() {
+  return Container(
+    color: Colors.black,
+    child: Center(
+      child: Image.asset('assets/images/icon_loading.gif'),
+    ),
+  );
 }

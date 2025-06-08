@@ -31,7 +31,7 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
                 isFiltered: state.isFiltered);
 
           case DataStatus.loading:
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: showLoadingIndicator());
           case DataStatus.error:
             return Center(
                 child: errorWidget(
@@ -40,10 +40,7 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
                         : state.bookErrorMessage,
                     context));
           case DataStatus.initial:
-            return const Center(
-                child: CircularProgressIndicator(
-              color: Colors.red,
-            ));
+            return showLoadingIndicator();
         }
       },
       listener: (BuildContext context, state) {
@@ -55,4 +52,13 @@ class _AdminBooksPageState extends State<AdminBooksPage> {
       },
     );
   }
+}
+
+Widget showLoadingIndicator() {
+  return Container(
+    color: Colors.black,
+    child: Center(
+      child: Image.asset('assets/images/icon_loading.gif'),
+    ),
+  );
 }
