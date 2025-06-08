@@ -125,8 +125,8 @@ class Api {
 
   // filter books
   Future<dynamic> filterBooks({int minPrice = 0, int maxPrice = 14}) async {
-    final response = await dio
-        .get('$baseUrl$books?minPrice=${minPrice}&maxPrice=${maxPrice}');
+    final response =
+        await dio.get('$baseUrl$books?minPrice=$minPrice&maxPrice=$maxPrice');
 
     if (response.statusCode == 200) {
       final List<dynamic> data = response.data as List<dynamic>;

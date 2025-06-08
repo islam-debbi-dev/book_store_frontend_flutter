@@ -2,7 +2,7 @@ import 'package:booke_store/features/admin/adminhome/logic/admin_home_cubit.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'books_view.dart';
+import 'books_widgets/books_view.dart';
 import 'error_home.dart';
 
 class AdminBooksPage extends StatefulWidget {
