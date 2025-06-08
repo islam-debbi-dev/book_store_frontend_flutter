@@ -38,7 +38,7 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
                     state.authorStatus ==
                         DataStatus
                             .initial // Be more specific for initial loading
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: showLoadingIndicator())
                 : AuthorsView(
                     authors: state.authors); // Show list while loading more
           case DataStatus.success:
@@ -50,4 +50,13 @@ class _AdminAuthorsPageState extends State<AdminAuthorsPage> {
       },
     );
   }
+}
+
+Widget showLoadingIndicator() {
+  return Container(
+    color: Colors.black,
+    child: Center(
+      child: Image.asset('assets/images/icon_loading.gif'),
+    ),
+  );
 }

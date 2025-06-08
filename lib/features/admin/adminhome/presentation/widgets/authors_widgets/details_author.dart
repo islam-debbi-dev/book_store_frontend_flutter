@@ -53,14 +53,6 @@ class DetailsAuthor extends StatelessWidget {
               fontWeight: FontWeight.normal,
             ),
           ),
-          TextSpan(
-            text: value,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 18,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
         ],
       ),
     );
